@@ -10,18 +10,23 @@
 #define CITIES_BEGIN_ADDR       0x00A52E2C
 
 typedef struct {
+        // BIC+0x0000
         DWORD BIC; // "BIC "
         DWORD no_idea_1[3];
         DWORD biqFilenamePtr;
         DWORD no_idea_2[67];
+        // BIC+0x0120
         char pathNoExt[260];
         char pathWithExt[260];
         char c3cPath[260];
         char ptwPath[260];
+        // BIC+0x0530
         DWORD no_idea_3[64]; // all zero
         char saveTmp[16]; // save0.tmp
+        // BIC+0x0640
         char no_idea_4[512];
         DWORD no_idea_5[10];
+        // BIC+0x0868
         DWORD nTechs;
         DWORD nUnits;
         DWORD nBuildings;
@@ -30,9 +35,11 @@ typedef struct {
         DWORD no_idea_7;
         DWORD nPlayers;
         DWORD no_idea_8[14];
+        // BIC+0x08D8
         char description[640];
         char scenarioTitle[64];
         DWORD no_idea_9; // zero?
+        // BIC+0x0B9C
         DWORD buildingsPtr;
         DWORD citizensPtr;
         DWORD cityNamesPtr; // ???
@@ -46,6 +53,7 @@ typedef struct {
         DWORD no_idea_12_ptr; // points to a sequence of DWORDS, 01-1f
         DWORD no_idea_13_ptr;
         DWORD no_idea_14[2];
+        // BIC+0x0BD8
         DWORD autoPlaceCaptureUnits;
         DWORD autoPlaceKingUnits;
         DWORD autoPlaceVictoryLocations;
@@ -59,6 +67,7 @@ typedef struct {
         DWORD timeLimitTurns;
         DWORD timeScaleTurns[7];
         DWORD timeScaleUnits[7];
+        // BIC+0x0C3C
         DWORD victoryPointLimit;
         DWORD cityEliminationCount;
         DWORD cultureVictoryCity;
@@ -73,8 +82,10 @@ typedef struct {
         DWORD captureUnitVP;
         DWORD captureUnitGold;
         DWORD no_idea_15;
+        // BIC+0x0C74
         char scenarioSearchFolders[5200];
         DWORD no_idea_16[64]; // zero?
+        // BIC+0x21C4
         char alliance1Name[256];
         char alliance2Name[256];
         char alliance3Name[256];
@@ -82,6 +93,7 @@ typedef struct {
         char no_idea_17[404]; // includes plague stuff
         char scenarioTitle2[260]; // padded with lots of 0xCD ???
         char no_idea_18[5220];
+        // BIC+0x3CC0
         DWORD racesPtr;
         DWORD resourcesPtr;
         DWORD govtsPtr;
@@ -92,6 +104,7 @@ typedef struct {
         char citySize1[32];
         char citySize2[32];
         char citySize3[32];
+        // BIC+0x3D3C
         DWORD no_idea_20[42]; // general settings, mostly
         DWORD culturalLevelsPtr; // Fledgling, Weak, ..., Glorious
         DWORD lvlMultiplier; // ?
@@ -99,6 +112,7 @@ typedef struct {
         DWORD borderFactor; // ?
         DWORD futureTechCost;
         DWORD no_idea_21[6];
+        // BIC+0x3E10
         DWORD techsPtr;
         DWORD workerJobsPtr;
         DWORD terrainPtr;
