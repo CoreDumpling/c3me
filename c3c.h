@@ -28,7 +28,7 @@ typedef struct {
         DWORD no_idea_6[8];
         DWORD nResources;
         DWORD no_idea_7;
-        DWORD nCivs;
+        DWORD nPlayers;
         DWORD no_idea_8[14];
         char description[640];
         char scenarioTitle[64];
