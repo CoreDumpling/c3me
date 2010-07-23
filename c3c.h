@@ -343,5 +343,5 @@ typedef struct {
         DWORD no_idea_4[3];
 } Citizen;
 
-BOOL ReadCivMemory(DWORD lpAddress, void* buf, int len);
-BOOL WriteCivMemory(DWORD lpAddress, void* buf, int len);
+extern BOOL ReadC3CMemory(DWORD lpAddress, void* buf, int len);
+extern BOOL WriteC3CMemory(DWORD lpAddress, void* buf, int len);

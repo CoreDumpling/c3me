@@ -4,19 +4,19 @@ int main(int argc, char** argv) {
         Bic bic;
         int i;
 
-        if (!ReadCivMemory(BIC_ADDR, &bic, sizeof(Bic))) {
+        if (!ReadC3CMemory(BIC_ADDR, &bic, sizeof(Bic))) {
                 return 1;
         }
 
         DWORD nRaces;
         // number of races appears right before address pointed by racesPtr
-        if (!ReadCivMemory(bic.racesPtr - sizeof(DWORD), &nRaces,
+        if (!ReadC3CMemory(bic.racesPtr - sizeof(DWORD), &nRaces,
                            sizeof(DWORD))) {
                 return 1;
         }
         printf("Number of races: %d\n", nRaces);
         RaceRec* raceRecs = (RaceRec*) malloc(nRaces * sizeof(RaceRec));
-        if (!ReadCivMemory(bic.racesPtr, raceRecs,
+        if (!ReadC3CMemory(bic.racesPtr, raceRecs,
                            nRaces * sizeof(RaceRec))) {
                 return 1;
         }
@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
         printf("Number of resources: %d\n", bic.nResources);
         ResourceRec* resRecs =
             (ResourceRec*) malloc(bic.nResources * sizeof(ResourceRec));
-        if (!ReadCivMemory(bic.resourcesPtr, resRecs,
+        if (!ReadC3CMemory(bic.resourcesPtr, resRecs,
                            bic.nResources * sizeof(ResourceRec))) {
                 return 1;
         }
@@ -37,13 +37,13 @@ int main(int argc, char** argv) {
 
         DWORD nGovts;
         // number of govts appears right before address pointed by govtsPtr
-        if (!ReadCivMemory(bic.govtsPtr - sizeof(DWORD), &nGovts,
+        if (!ReadC3CMemory(bic.govtsPtr - sizeof(DWORD), &nGovts,
                            sizeof(DWORD))) {
                 return 1;
         }
         printf("Number of governments: %d\n", nGovts);
         GovtRec* govtRecs = (GovtRec*) malloc(nGovts * sizeof(GovtRec));
-        if (!ReadCivMemory(bic.govtsPtr, govtRecs,
+        if (!ReadC3CMemory(bic.govtsPtr, govtRecs,
                            nGovts * sizeof(GovtRec))) {
                 return 1;
         }
@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
 
         DWORD nPlayers;
         // number of players appears right before address pointed by playersPtr
-        if (!ReadCivMemory(bic.playersPtr - sizeof(DWORD), &nPlayers,
+        if (!ReadC3CMemory(bic.playersPtr - sizeof(DWORD), &nPlayers,
                            sizeof(DWORD))) {
                 return 1;
         }
@@ -61,7 +61,7 @@ int main(int argc, char** argv) {
         PlayerRec* playerRecs =
             (PlayerRec*) malloc(nPlayers * sizeof(PlayerRec));
         // no idea what the first 4 bytes are, but they don't match a player
-        if (!ReadCivMemory(bic.playersPtr + sizeof(DWORD), playerRecs,
+        if (!ReadC3CMemory(bic.playersPtr + sizeof(DWORD), playerRecs,
                            nPlayers * sizeof(PlayerRec))) {
                 return 1;
         }
@@ -74,13 +74,13 @@ int main(int argc, char** argv) {
 
         DWORD nUnits;
         // number of units appears right before address pointed by unitsPtr
-        if (!ReadCivMemory(bic.unitsPtr - sizeof(DWORD), &nUnits,
+        if (!ReadC3CMemory(bic.unitsPtr - sizeof(DWORD), &nUnits,
                            sizeof(DWORD))) {
                 return 1;
         }
         printf("Number of units: %d\n", nUnits);
         UnitRec* unitRecs = (UnitRec*) malloc(nUnits * sizeof(UnitRec));
-        if (!ReadCivMemory(bic.unitsPtr, unitRecs,
+        if (!ReadC3CMemory(bic.unitsPtr, unitRecs,
                            nUnits * sizeof(UnitRec))) {
                 return 1;
         }
@@ -94,22 +94,22 @@ int main(int argc, char** argv) {
         DWORD unitsPtr;
         DWORD unitValid;
         DWORD unitPtr;
-        if (!ReadCivMemory(UNITS_BEGIN_ADDR, &unitsPtr, sizeof(DWORD))) {
+        if (!ReadC3CMemory(UNITS_BEGIN_ADDR, &unitsPtr, sizeof(DWORD))) {
                 return 1;
         }
         printf("%x\n", unitsPtr);
         do {
-                ReadCivMemory(unitsPtr, &unitValid, sizeof(DWORD));
+                ReadC3CMemory(unitsPtr, &unitValid, sizeof(DWORD));
                 unitsPtr += sizeof(DWORD);
                 if (unitValid != 0xffffffff) {
                         continue;
                 }
-                ReadCivMemory(unitsPtr, &unitPtr, sizeof(DWORD));
+                ReadC3CMemory(unitsPtr, &unitPtr, sizeof(DWORD));
                 if (unitPtr == 0) {
                         break;
                 }
                 Unit unit;
-                ReadCivMemory(unitPtr, &unit, sizeof(Unit));
+                ReadC3CMemory(unitPtr, &unit, sizeof(Unit));
                 printf("Unit #%04d - %s, %s (%d,%d):\n",
                        unit.id, raceRecs[playerRecs[unit.owner - 1].civId].civName,
                        unitRecs[unit.type].name, unit.x, unit.y);
@@ -119,22 +119,22 @@ int main(int argc, char** argv) {
         DWORD citiesPtr;
         DWORD cityValid;
         DWORD cityPtr;
-        if (!ReadCivMemory(CITIES_BEGIN_ADDR, &citiesPtr, sizeof(DWORD))) {
+        if (!ReadC3CMemory(CITIES_BEGIN_ADDR, &citiesPtr, sizeof(DWORD))) {
                 return 1;
         }
         printf("%x\n", citiesPtr);
         do {
-                ReadCivMemory(citiesPtr, &cityValid, sizeof(DWORD));
+                ReadC3CMemory(citiesPtr, &cityValid, sizeof(DWORD));
                 citiesPtr += sizeof(DWORD);
                 if (cityValid != 0xffffffff) {
                         continue;
                 }
-                ReadCivMemory(citiesPtr, &cityPtr, sizeof(DWORD));
+                ReadC3CMemory(citiesPtr, &cityPtr, sizeof(DWORD));
                 if (cityPtr == 0) {
                         break;
                 }
                 City city;
-                ReadCivMemory(cityPtr, &city, sizeof(City));
+                ReadC3CMemory(cityPtr, &city, sizeof(City));
                 printf("City #%03d - %s (%d,%d), pop %d:\n",
                        city.id, city.name, city.x, city.y, city.population);
                 citiesPtr += sizeof(DWORD);
@@ -145,14 +145,14 @@ int main(int argc, char** argv) {
                 DWORD citizenPtr;
                 int citizenCount = 0;
                 while (citizenCount < city.population) {
-                        ReadCivMemory(citizensPtr, &citizenValid,
+                        ReadC3CMemory(citizensPtr, &citizenValid,
                                       sizeof(DWORD));
                         citizensPtr += sizeof(DWORD);
-                        ReadCivMemory(citizensPtr, &citizenPtr, sizeof(DWORD));
+                        ReadC3CMemory(citizensPtr, &citizenPtr, sizeof(DWORD));
                         citizensPtr += sizeof(DWORD);
                         if (citizenValid == 0xffffffff && citizenPtr != 0) {
                                 Citizen citizen;
-                                ReadCivMemory(citizenPtr, &citizen,
+                                ReadC3CMemory(citizenPtr, &citizen,
                                               sizeof(Citizen));
                                 printf("\tCitizen type: %d\n", citizen.type);
                                 citizenCount++;

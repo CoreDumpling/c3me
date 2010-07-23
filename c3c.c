@@ -1,6 +1,6 @@
 #include "c3c.h"
 
-BOOL ReadCivMemory(DWORD lpAddress, void* buf, int len) {
+BOOL ReadC3CMemory(DWORD lpAddress, void* buf, int len) {
         HWND hwnd = FindWindow(NULL, C3C_WINDOW_TITLE);
         if (hwnd) {
                 DWORD pid;
@@ -15,7 +15,7 @@ BOOL ReadCivMemory(DWORD lpAddress, void* buf, int len) {
         }
 }
 
-BOOL WriteCivMemory(DWORD lpAddress, void* buf, int len) {
+BOOL WriteC3CMemory(DWORD lpAddress, void* buf, int len) {
         HWND hwnd = FindWindow(NULL, C3C_WINDOW_TITLE);
         if (hwnd) {
                 DWORD pid;
