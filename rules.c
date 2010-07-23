@@ -1,5 +1,5 @@
 #include <windows.h>
-#include <cstdio>
+#include <stdio.h>
 
 // This is the title for the English edition of C3C
 // You may need to change it for other editions
@@ -10,7 +10,7 @@
 #define UNITS_BEGIN_ADDR        0x00A52E44
 #define CITIES_BEGIN_ADDR       0x00A52E2C
 
-struct Bic {
+typedef struct {
         DWORD BIC; // "BIC "
         DWORD no_idea_1[3];
         DWORD biqFilenamePtr;
@@ -109,9 +109,9 @@ struct Bic {
         DWORD screenWidthPixels;
         DWORD screenHeightPixels;
         DWORD no_idea_24;
-};
+} Bic;
 
-struct RaceRec {
+typedef struct {
         DWORD no_idea_1[5];
         DWORD cityNamesPtr;
         DWORD milLeadersPtr;
@@ -155,9 +155,9 @@ struct RaceRec {
         DWORD dipTextIndex;
         DWORD numSciLeaders;
         DWORD sciLeadersPtr;
-};
+} RaceRec;
 
-struct ResourceRec {
+typedef struct {
         DWORD no_idea_1;
         char name[16];
         DWORD no_idea_2;
@@ -171,9 +171,9 @@ struct ResourceRec {
         DWORD food;
         DWORD shields;
         DWORD commerce;
-};
+} ResourceRec;
 
-struct GovtRec {
+typedef struct {
         DWORD no_idea_1[3];
         DWORD defaultType;
         DWORD transitionType;
@@ -215,9 +215,9 @@ struct GovtRec {
         DWORD freeUnitsPerMetro;
         DWORD costPerUnit;
         DWORD warWeariness;
-};
+} GovtRec;
 
-struct PlayerRec {
+typedef struct {
         DWORD customCivData;
         DWORD humanPlayer;
         char leaderName[32];
@@ -234,9 +234,9 @@ struct PlayerRec {
         DWORD civId;
         DWORD color;
         DWORD no_idea_4[4];
-};
+} PlayerRec;
 
-struct UnitRec {
+typedef struct {
         DWORD no_idea_1;
         DWORD zone_of_control;
         char name[32];
@@ -282,9 +282,9 @@ struct UnitRec {
         DWORD no_idea_5;
         DWORD airDefense;
         DWORD no_idea_6[12];
-};
+} UnitRec;
 
-struct Unit {
+typedef struct {
         DWORD no_idea_1;
         DWORD id;
         DWORD x;
@@ -308,9 +308,9 @@ struct Unit {
         char name[32];
         DWORD no_idea_8[7]; // all 0000's
         DWORD no_idea_9[4]; // all FFFF's
-};
+} Unit;
 
-struct City {
+typedef struct {
         DWORD no_idea_1;
         DWORD id;
         WORD x;
@@ -332,9 +332,9 @@ struct City {
         DWORD culture;
         DWORD no_idea_8[38];
         char name[24];
-};
+} City;
 
-struct Citizen {
+typedef struct {
         DWORD no_idea_1;
         char desc[64]; // auto-generated no idea about true length
         DWORD no_idea_2[48]; // all zeros?
@@ -342,46 +342,47 @@ struct Citizen {
         DWORD type; // 0 = laborer, 1 = ent, 2 = tax, 3 = sci, 4 = pol, 5 = eng
         DWORD race;
         DWORD no_idea_4[3];
-};
+} Citizen;
 
-bool ReadCivMemory(DWORD lpAddress, void* buf, int len) {
+BOOL ReadCivMemory(DWORD lpAddress, void* buf, int len) {
         HWND hwnd = FindWindow(NULL, C3C_WINDOW_TITLE);
         if (hwnd) {
                 DWORD pid;
                 GetWindowThreadProcessId(hwnd, &pid);
-                HANDLE hProc = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
+                HANDLE hProc = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);
                 ReadProcessMemory(hProc, (void*) lpAddress, buf, len, 0);
                 CloseHandle(hProc);
-                return true;
+                return TRUE;
         } else {
                 printf("C3C process not found\n");
-                return false;
+                return FALSE;
         }
 }
 
-bool WriteCivMemory(DWORD lpAddress, void* buf, int len) {
+BOOL WriteCivMemory(DWORD lpAddress, void* buf, int len) {
         HWND hwnd = FindWindow(NULL, C3C_WINDOW_TITLE);
         if (hwnd) {
                 DWORD pid;
                 GetWindowThreadProcessId(hwnd, &pid);
-                HANDLE hProc = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
+                HANDLE hProc = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);
                 SIZE_T wlen;
                 WriteProcessMemory(hProc, (void*) lpAddress, buf, len, &wlen);
                 CloseHandle(hProc);
                 if (len == wlen) {
-                        return true;
+                        return TRUE;
                 } else {
                         printf("Memory write error\n");
-                        return false;
+                        return FALSE;
                 }
         } else {
                 printf("C3C process not found\n");
-                return false;
+                return FALSE;
         }
 }
 
 int main(int argc, char** argv) {
         Bic bic;
+        int i;
 
         if (!ReadCivMemory(BIC_ADDR, &bic, sizeof(Bic))) {
                 return 1;
@@ -394,22 +395,23 @@ int main(int argc, char** argv) {
                 return 1;
         }
         printf("Number of races: %d\n", nRaces);
-        RaceRec* raceRecs = new RaceRec[nRaces];
+        RaceRec* raceRecs = (RaceRec*) malloc(nRaces * sizeof(RaceRec));
         if (!ReadCivMemory(bic.racesPtr, raceRecs,
                            nRaces * sizeof(RaceRec))) {
                 return 1;
         }
-        for (int i = 0; i < nRaces; ++i) {
+        for (i = 0; i < nRaces; ++i) {
                 printf("Civ #%02d - %s:\n", i, raceRecs[i].civName);
         }
 
         printf("Number of resources: %d\n", bic.nResources);
-        ResourceRec* resRecs = new ResourceRec[bic.nResources];
+        ResourceRec* resRecs =
+            (ResourceRec*) malloc(bic.nResources * sizeof(ResourceRec));
         if (!ReadCivMemory(bic.resourcesPtr, resRecs,
                            bic.nResources * sizeof(ResourceRec))) {
                 return 1;
         }
-        for (int i = 0; i < bic.nResources; ++i) {
+        for (i = 0; i < bic.nResources; ++i) {
                 printf("%s: %s\n", resRecs[i].name, resRecs[i].pedia);
         }
 
@@ -420,12 +422,12 @@ int main(int argc, char** argv) {
                 return 1;
         }
         printf("Number of governments: %d\n", nGovts);
-        GovtRec* govtRecs = new GovtRec[nGovts];
+        GovtRec* govtRecs = (GovtRec*) malloc(nGovts * sizeof(GovtRec));
         if (!ReadCivMemory(bic.govtsPtr, govtRecs,
                            nGovts * sizeof(GovtRec))) {
                 return 1;
         }
-        for (int i = 0; i < nGovts; ++i) {
+        for (i = 0; i < nGovts; ++i) {
                 printf("Government #%02d - %s:\n", i, govtRecs[i].name);
         }
 
@@ -436,13 +438,14 @@ int main(int argc, char** argv) {
                 return 1;
         }
         printf("Number of players: %d\n", nPlayers);
-        PlayerRec* playerRecs = new PlayerRec[nPlayers];
+        PlayerRec* playerRecs =
+            (PlayerRec*) malloc(nPlayers * sizeof(PlayerRec));
         // no idea what the first 4 bytes are, but they don't match a player
         if (!ReadCivMemory(bic.playersPtr + sizeof(DWORD), playerRecs,
                            nPlayers * sizeof(PlayerRec))) {
                 return 1;
         }
-        for (int i = 0; i < nPlayers; ++i) {
+        for (i = 0; i < nPlayers; ++i) {
                 // the index i starts at zero, but counts from "Player 1"
                 printf("Player #%02d - %s (%s):\n", i + 1,
                        raceRecs[playerRecs[i].civId].civName,
@@ -456,12 +459,12 @@ int main(int argc, char** argv) {
                 return 1;
         }
         printf("Number of units: %d\n", nUnits);
-        UnitRec* unitRecs = new UnitRec[nUnits];
+        UnitRec* unitRecs = (UnitRec*) malloc(nUnits * sizeof(UnitRec));
         if (!ReadCivMemory(bic.unitsPtr, unitRecs,
                            nUnits * sizeof(UnitRec))) {
                 return 1;
         }
-        for (int i = 0; i < nUnits; ++i) {
+        for (i = 0; i < nUnits; ++i) {
                 printf("Unit #%03d - %s (%d.%d.%d) / %d shields:\n",
                        i, unitRecs[i].name,
                        unitRecs[i].attack, unitRecs[i].defense,
@@ -537,10 +540,10 @@ int main(int argc, char** argv) {
                 }
         } while (!(cityValid == 0xffffffff && cityPtr == 0));
 
-        delete [] raceRecs;
-        delete [] resRecs;
-        delete [] unitRecs;
-        delete [] playerRecs;
-        delete [] govtRecs;
+        free(raceRecs);
+        free(resRecs);
+        free(unitRecs);
+        free(playerRecs);
+        free(govtRecs);
         return 0;
 }
