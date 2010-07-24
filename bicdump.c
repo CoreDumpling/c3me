@@ -1,3 +1,5 @@
+// Utility to dump contents of Bic data structure
+
 #include "c3c.h"
 
 #define BIC_PRINT_STR(bic, field) \
