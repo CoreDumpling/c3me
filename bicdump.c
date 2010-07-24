@@ -2,8 +2,9 @@
 
 #define BIC_PRINT_STR(bic, field) \
         do { \
-                printf("BIC+%04x " #field ": %s\n", \
-                       (int) &bic.field - (int) &bic, bic.field); \
+                printf("BIC+%04x " #field ": %.*s\n", \
+                       (int) &bic.field - (int) &bic, sizeof(bic.field), \
+                       bic.field); \
         } while (0);
 #define BIC_PRINT_DWORD(bic, field, fmt) \
         do { \
