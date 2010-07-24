@@ -283,7 +283,7 @@ typedef struct {
         DWORD airMissionsPTW;
         DWORD actionsMix;
         DWORD bombardEffects;
-        BYTE ignoreMovement[16];
+        DWORD ignoreMovement[4];
         DWORD requireSupport;
         DWORD no_idea_2[4];
         DWORD enslaveResults;
