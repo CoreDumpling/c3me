@@ -2,16 +2,16 @@
 
 #define BIC_PRINT_STR(bic, field) \
         do { \
-                printf("BIC+%04x (%s): %s\n", \
-                       (int) &bic.field - (int) &bic, #field, bic.field); \
+                printf("BIC+%04x " #field ": %s\n", \
+                       (int) &bic.field - (int) &bic, bic.field); \
         } while (0);
 #define BIC_PRINT_DWORD_BUF(bic, field) \
         do { \
                 DWORD* ptr = bic.field; \
                 DWORD* end = ptr + sizeof(bic.field) / sizeof(DWORD); \
                 while (ptr != end) { \
-                        printf("BIC+%04x (%s): %x\n", \
-                               (int) ptr - (int) &bic, #field, *ptr); \
+                        printf("BIC+%04x (" #field "): %x\n", \
+                               (int) ptr - (int) &bic, *ptr); \
                         ++ptr; \
                 } \
         } while (0);
