@@ -5,12 +5,12 @@
                 printf("BIC+%04x " #field ": %s\n", \
                        (int) &bic.field - (int) &bic, bic.field); \
         } while (0);
-#define BIC_PRINT_DWORD_BUF(bic, field) \
+#define BIC_PRINT_DWORD_BUF(bic, field, fmt) \
         do { \
                 int len = sizeof(bic.field) / sizeof(DWORD); \
                 int i; \
                 for (i = 0; i < len; ++i) { \
-                        printf("BIC+%04x (" #field "[%d]): %x\n", \
+                        printf("BIC+%04x (" #field "[%d]): " fmt "\n", \
                                (int) &bic.field[i] - (int) &bic, i, \
                                bic.field[i]); \
                 } \
@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
         }
 
         BIC_PRINT_STR(bic, BIC);
-        BIC_PRINT_DWORD_BUF(bic, no_idea_1);
+        BIC_PRINT_DWORD_BUF(bic, no_idea_1, "0x%08x");
         /*
         for (i = 0; i < szBic; i += 4) {
                 printf("BIC+%04x: %x\n", i, *ptr);
