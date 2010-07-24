@@ -21,8 +21,8 @@ typedef struct {
         char c3cPath[260];
         char ptwPath[260];
         // BIC+0x0530
-        DWORD no_idea_3[64]; // all zero
-        char saveTmp[16]; // save0.tmp
+        DWORD no_idea_3[64]; // all zero?
+        char saveTmp[16]; // sometimes observed to be "save0.tmp"
         // BIC+0x0640
         char no_idea_4[512];
         DWORD no_idea_5[10];
@@ -78,7 +78,7 @@ typedef struct {
         DWORD defeatUnitVP;
         DWORD advanceVP;
         DWORD cityConquestVP;
-        DWORD victoryPointVP;
+        DWORD victoryPointLocationVP;
         DWORD captureUnitVP;
         DWORD captureUnitGold;
         DWORD no_idea_15;
@@ -90,16 +90,16 @@ typedef struct {
         char alliance2Name[256];
         char alliance3Name[256];
         char alliance4Name[256];
-        char no_idea_17[404]; // includes plague stuff
+        DWORD no_idea_17[101]; // includes plague stuff
         char scenarioTitle2[260]; // padded with lots of 0xCD ???
-        char no_idea_18[5220];
+        DWORD no_idea_18[1305];
         // BIC+0x3CC0
         DWORD racesPtr;
         DWORD resourcesPtr;
         DWORD govtsPtr;
         DWORD playersPtr;
         DWORD unitsPtr;
-        DWORD menuArtPtr;
+        DWORD menuArtPtr; // ?
         DWORD no_idea_19; // zero?
         char citySize1[32];
         char citySize2[32];
@@ -107,8 +107,8 @@ typedef struct {
         // BIC+0x3D3C
         DWORD no_idea_20[42]; // general settings, mostly
         DWORD culturalLevelsPtr; // Fledgling, Weak, ..., Glorious
-        DWORD lvlMultiplier; // ?
-        DWORD numCulturalLevels; // ?
+        DWORD levelMultiplier; // ?
+        DWORD nCulturalLevels; // ?
         DWORD borderFactor; // ?
         DWORD futureTechCost;
         DWORD no_idea_21[6];
