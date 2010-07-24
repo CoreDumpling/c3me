@@ -72,6 +72,15 @@ int main(int argc, char** argv) {
                        govtRecs[playerRecs[i].government].name);
         }
 
+        Leader leaders[32];
+        if (!ReadC3CMemory(LEADERS_BEGIN_ADDR, &leaders, sizeof(leaders))) {
+                return 1;
+        }
+        for (i = 0; i < 32; ++i) {
+               printf("Leader #%02d - %s\n", i,
+                       raceRecs[leaders[i].nationality].civName);
+        }
+
         DWORD nUnits;
         // number of units appears right before address pointed by unitsPtr
         if (!ReadC3CMemory(bic.unitsPtr - sizeof(DWORD), &nUnits,
@@ -111,7 +120,8 @@ int main(int argc, char** argv) {
                 Unit unit;
                 ReadC3CMemory(unitPtr, &unit, sizeof(Unit));
                 printf("Unit #%04d - %s, %s (%d,%d):\n",
-                       unit.id, raceRecs[playerRecs[unit.owner - 1].civId].civName,
+                       unit.id,
+                       raceRecs[leaders[unit.owner].nationality].civName,
                        unitRecs[unit.type].name, unit.x, unit.y);
                 unitsPtr += sizeof(DWORD);
         } while (!(unitValid == 0xffffffff && unitPtr == 0));

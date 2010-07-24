@@ -8,6 +8,7 @@
 #define BIC_ADDR                0x009C34D0
 #define UNITS_BEGIN_ADDR        0x00A52E44
 #define CITIES_BEGIN_ADDR       0x00A52E2C
+#define LEADERS_BEGIN_ADDR      0x00A52E60
 
 typedef struct {
         // BIC+0x0000
@@ -356,6 +357,25 @@ typedef struct {
         DWORD race;
         DWORD no_idea_4[3];
 } Citizen;
+
+typedef struct {
+        char LEAD[4]; // "LEAD"
+        DWORD no_idea_1[4];
+        DWORD id;
+        DWORD nationality;
+        DWORD no_idea_2[2];
+        DWORD capitalCityId;
+        DWORD no_idea_3[50];
+        DWORD beakers;
+        DWORD researchTech;
+        DWORD no_idea_4[41];
+        DWORD luxury;
+        DWORD science;
+        DWORD tax;
+        DWORD no_idea_5[832];
+        DWORD contacts[32];
+        DWORD no_idea_6[1135];
+} Leader;
 
 extern BOOL ReadC3CMemory(DWORD lpAddress, void* buf, int len);
 extern BOOL WriteC3CMemory(DWORD lpAddress, void* buf, int len);
