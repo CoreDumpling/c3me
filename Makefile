@@ -9,6 +9,9 @@ rules.exe: rules.c c3c.o
 bicdump.exe: bicdump.c c3c.o
 	gcc $^ -o $@
 
+unitdump.exe: unitdump.c c3c.o
+	gcc $^ -o $@
+
 clean:
 	rm -f *.exe *.o *.stackdump
 
