@@ -7,12 +7,12 @@
         } while (0);
 #define BIC_PRINT_DWORD_BUF(bic, field) \
         do { \
-                DWORD* ptr = bic.field; \
-                DWORD* end = ptr + sizeof(bic.field) / sizeof(DWORD); \
-                while (ptr != end) { \
-                        printf("BIC+%04x (" #field "): %x\n", \
-                               (int) ptr - (int) &bic, *ptr); \
-                        ++ptr; \
+                int len = sizeof(bic.field) / sizeof(DWORD); \
+                int i; \
+                for (i = 0; i < len; ++i) { \
+                        printf("BIC+%04x (" #field "[%d]): %x\n", \
+                               (int) &bic.field[i] - (int) &bic, i, \
+                               bic.field[i]); \
                 } \
         } while (0);
 
