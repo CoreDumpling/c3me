@@ -11,7 +11,7 @@
 
 typedef struct {
         // BIC+0x0000
-        DWORD BIC; // "BIC "
+        char BIC[4]; // "BIC "
         DWORD no_idea_1[3];
         DWORD biqFilenamePtr;
         DWORD no_idea_2[67];
