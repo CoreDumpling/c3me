@@ -1,4 +1,5 @@
 #include "c3c.h"
+#include <stdio.h>
 
 BOOL ReadC3CMemory(DWORD lpAddress, void* buf, int len) {
         HWND hwnd = FindWindow(NULL, C3C_WINDOW_TITLE);
@@ -10,7 +11,7 @@ BOOL ReadC3CMemory(DWORD lpAddress, void* buf, int len) {
                 CloseHandle(hProc);
                 return TRUE;
         } else {
-                printf("C3C process not found\n");
+                fprintf(stderr, "C3C process not found\n");
                 return FALSE;
         }
 }
@@ -27,11 +28,11 @@ BOOL WriteC3CMemory(DWORD lpAddress, void* buf, int len) {
                 if (len == wlen) {
                         return TRUE;
                 } else {
-                        printf("Memory write error\n");
+                        fprintf(stderr, "Memory write error\n");
                         return FALSE;
                 }
         } else {
-                printf("C3C process not found\n");
+                fprintf(stderr, "C3C process not found\n");
                 return FALSE;
         }
 }
