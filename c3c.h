@@ -126,6 +126,7 @@ typedef struct {
         DWORD no_idea_24;
 } Bic;
 
+// Civilizations tab in rules editor
 typedef struct {
         DWORD no_idea_1[5];
         DWORD cityNamesPtr;
@@ -172,22 +173,15 @@ typedef struct {
         DWORD sciLeadersPtr;
 } RaceRule;
 
+// Combat experience tab in rules editor
 typedef struct {
-        DWORD no_idea_1;
-        char name[16];
-        DWORD no_idea_2;
-        DWORD no_idea_3;
-        char pedia[32];
-        DWORD type;
-        DWORD appearance;
-        DWORD disappearance;
-        DWORD icon;
-        DWORD prerequisite;
-        DWORD food;
-        DWORD shields;
-        DWORD commerce;
-} ResourceRule;
+	DWORD no_idea_1; // zero?
+	char name[32];
+	DWORD hp;
+	DWORD retreatBonus;
+} ExpRule;
 
+// Governments tab in rules editor
 typedef struct {
         DWORD no_idea_1[3];
         DWORD defaultType;
@@ -232,6 +226,24 @@ typedef struct {
         DWORD warWeariness;
 } GovtRule;
 
+// Natural Resources tab in rules editor
+typedef struct {
+        DWORD no_idea_1;
+        char name[16];
+        DWORD no_idea_2;
+        DWORD no_idea_3;
+        char pedia[32];
+        DWORD type;
+        DWORD appearance;
+        DWORD disappearance;
+        DWORD icon;
+        DWORD prerequisite;
+        DWORD food;
+        DWORD shields;
+        DWORD commerce;
+} ResourceRule;
+
+// Units tab in rules editor
 typedef struct {
         DWORD no_idea_1;
         DWORD zone_of_control;
@@ -280,13 +292,7 @@ typedef struct {
         DWORD no_idea_6[12];
 } UnitRule;
 
-typedef struct {
-	DWORD no_idea_1; // zero?
-	char name[32];
-	DWORD hp;
-	DWORD retreatBonus;
-} ExpRule;
-
+// Player data from scenario properties
 typedef struct {
         DWORD customCivData;
         DWORD humanPlayer;
@@ -306,6 +312,7 @@ typedef struct {
         DWORD no_idea_4[4];
 } PlayerData;
 
+// In-game unit informaton
 typedef struct {
         DWORD no_idea_1;
         DWORD id;
@@ -332,6 +339,7 @@ typedef struct {
         DWORD no_idea_9[4]; // all FFFF's
 } Unit;
 
+// In-game city information
 typedef struct {
         DWORD no_idea_1;
         DWORD id;
@@ -356,6 +364,7 @@ typedef struct {
         char name[24];
 } City;
 
+// In-game citizen information
 typedef struct {
         DWORD no_idea_1;
         char desc[64]; // auto-generated no idea about true length
@@ -366,6 +375,7 @@ typedef struct {
         DWORD no_idea_4[3];
 } Citizen;
 
+// In-game player ("leader") information
 typedef struct {
         char LEAD[4]; // "LEAD"
         DWORD no_idea_1[4];
