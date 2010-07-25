@@ -1,6 +1,7 @@
 // Utility to dump contents of data structures
 
 #include "c3c.h"
+#include <stdio.h>
 
 #define PRINT_STR(data, field) \
         do { \
@@ -118,6 +119,85 @@ int dump_bic() {
         return 0;
 }
 
+int dump_unit(int unitId) {
+        DWORD unitsPtr;
+        DWORD unitValid, unitValidPtr;
+        DWORD unitPtr, unitPtrPtr;
+        if (!ReadC3CMemory(UNITS_BEGIN_ADDR, &unitsPtr, sizeof(DWORD))) {
+                return 1;
+        }
+        unitValidPtr = unitsPtr + unitId * 2 * sizeof(DWORD);
+        if (!ReadC3CMemory(unitValidPtr, &unitValid, sizeof(DWORD))) {
+                return 1;
+        }
+        unitPtrPtr = unitValidPtr + sizeof(DWORD);
+        if (unitValid != 0xffffffff) {
+                fprintf(stderr, "Invalid unit id: %d\n", unitId);
+                return 1;
+        } else {
+                Unit unit;
+                if (!ReadC3CMemory(unitPtrPtr, &unitPtr, sizeof(DWORD))) {
+                        return 1;
+                }
+                if (!unitPtr) {
+                        fprintf(stderr, "Error: NULL pointer\n");
+                        return 1;
+                }
+                if (!ReadC3CMemory(unitPtr, &unit, sizeof(Unit))) {
+                        return 1;
+                }
+                PRINT_DWORD(unit, no_idea_1, "0x%08x");
+                PRINT_DWORD(unit, id, "%d");
+                PRINT_DWORD(unit, x, "%d");
+                PRINT_DWORD(unit, y, "%d");
+                PRINT_DWORD(unit, prevx, "%d");
+                PRINT_DWORD(unit, prevy, "%d");
+                PRINT_DWORD(unit, owner, "%d");
+                PRINT_DWORD(unit, nationality, "%d");
+                PRINT_DWORD(unit, no_idea_3, "%d");
+                PRINT_DWORD(unit, type, "%d");
+                PRINT_DWORD(unit, experience, "%d");
+                PRINT_DWORD(unit, no_idea_4, "%d");
+                PRINT_DWORD(unit, damage, "%d");
+                PRINT_DWORD(unit, usedMovement, "%d");
+                PRINT_DWORD(unit, no_idea_5, "%d");
+                PRINT_DWORD(unit, workerAction, "%d");
+                PRINT_DWORD_BUF(unit, no_idea_6, "%d");
+                PRINT_DWORD(unit, fortified, "%d");
+                PRINT_DWORD(unit, endTurn, "%d");
+                PRINT_DWORD_BUF(unit, no_idea_7, "%d");
+                PRINT_STR(unit, name);
+                PRINT_DWORD_BUF(unit, no_idea_8, "%d");
+                PRINT_DWORD_BUF(unit, no_idea_9, "%d");
+        }
+        return 0;
+}
+
+void print_usage() {
+        fprintf(stderr, "Usage: datadump <data-type> [<id>]\n");
+        fprintf(stderr, "data-type may be:\n");
+        fprintf(stderr, "\tbic\n");
+        fprintf(stderr, "\tunit\n");
+}
+
 int main(int argc, char** argv) {
-        return dump_bic();
+        if (argc < 2) {
+                print_usage();
+                return 1;
+        }
+
+        if (!strcmp("bic", argv[1])) {
+                return dump_bic();
+        } else if (!strcmp("unit", argv[1])) {
+                if (argc < 3) {
+                        fprintf(stderr, "Unit id required\n");
+                        print_usage();
+                        return 1;
+                }
+                return dump_unit(atoi(argv[2]));
+        } else {
+                fprintf(stderr, "Unrecognized option: %s\n", argv[1]);
+                print_usage();
+                return 1;
+        }
 }

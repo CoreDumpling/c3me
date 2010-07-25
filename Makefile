@@ -6,9 +6,6 @@ c3c.o: c3c.c c3c.h
 rules.exe: rules.c c3c.o
 	gcc $^ -o $@
 
-unitdump.exe: unitdump.c c3c.o
-	gcc $^ -o $@
-
 datadump.exe: datadump.c c3c.o
 	gcc $^ -o $@
 
