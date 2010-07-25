@@ -193,7 +193,7 @@ typedef struct {
         DWORD sciLeadersPtr;
 } RaceRule;
 
-// Civilization advances tab in rules editor
+// Civilization Advances tab in rules editor
 typedef struct {
 	DWORD no_idea_1; // zero?
 	char name[32];
@@ -209,7 +209,7 @@ typedef struct {
 	DWORD no_idea_2; // one?
 } TechRule;
 
-// Combat experience tab in rules editor
+// Combat Experience tab in rules editor
 typedef struct {
 	DWORD no_idea_1; // zero?
 	char name[32];
@@ -229,7 +229,7 @@ typedef struct {
 	DWORD continuedResistanceChance;
 } CultureRule;
 
-// Difficulty levels tab in rules editor
+// Difficulty Levels tab in rules editor
 typedef struct {
 	DWORD no_idea_1; // zero?
 	char name[64];
@@ -249,6 +249,7 @@ typedef struct {
 	DWORD citizensQuelledByMilitary;
 } DifficultyRule;
 
+// Diplomats and Spies tab in rules editor
 typedef struct {
         DWORD no_idea_1; // zero?
         char description[128];
@@ -258,6 +259,7 @@ typedef struct {
         DWORD baseCost;
 } SpyRule;
 
+// Eras tab in rules editor
 typedef struct {
         DWORD no_idea_1; // zero?
         char name[64];
