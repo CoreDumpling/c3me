@@ -8,6 +8,22 @@ int main(int argc, char** argv) {
                 return 1;
         }
 
+        printf("Number of citizen types: %d\n", bic.nCitizens);
+        CitizenRule* citizenRules =
+            (CitizenRule*) malloc(bic.nCitizens * sizeof(CitizenRule));
+        if (!ReadC3CMemory(bic.citizensPtr, citizenRules,
+                           bic.nCitizens * sizeof(CitizenRule))) {
+                return 1;
+        }
+        for (i = 0; i < bic.nCitizens; ++i) {
+                printf("Citizen type %s: +%d lux +%d sci +%d tax "
+                       "+%d pol +%d eng\n",
+                       citizenRules[i].name, citizenRules[i].luxury,
+                       citizenRules[i].science, citizenRules[i].tax,
+                       citizenRules[i].corruption,
+                       citizenRules[i].construction);
+        }
+
         DWORD nRaces;
         // number of races appears right before address pointed by racesPtr
         if (!ReadC3CMemory(bic.racesPtr - sizeof(DWORD), &nRaces,
@@ -189,6 +205,7 @@ int main(int argc, char** argv) {
                 }
         } while (!(cityValid == 0xffffffff && cityPtr == 0));
 
+        free(citizenRules);
         free(raceRecs);
         free(resRecs);
         free(unitRecs);

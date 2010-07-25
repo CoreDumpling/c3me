@@ -32,7 +32,9 @@ typedef struct {
         DWORD nTechs;
         DWORD nUnits;
         DWORD nBuildings;
-        DWORD no_idea_6[8];
+        DWORD no_idea_6;
+	DWORD nCitizens; // number of citizen types (for citizensPtr)
+        DWORD no_idea_6b[6];
         DWORD nResources;
         DWORD no_idea_7;
         DWORD nPlayers;
@@ -125,6 +127,21 @@ typedef struct {
         DWORD screenHeightPixels;
         DWORD no_idea_24;
 } Bic;
+
+// Citizens tab in rules editor
+typedef struct {
+	DWORD no_idea_1; // zero?
+	DWORD defaultCitizen;
+	char name[32];
+	char pedia[32];
+	char plural[32];
+	DWORD prerequisite;
+	DWORD luxury;
+	DWORD science;
+	DWORD tax;
+	DWORD corruption;
+	DWORD construction;
+} CitizenRule;
 
 // Civilizations tab in rules editor
 typedef struct {
