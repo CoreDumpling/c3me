@@ -154,6 +154,25 @@ int main(int argc, char** argv) {
                        terrainRules[i].shields, terrainRules[i].commerce);
         }
 
+        DWORD nUnits;
+        // number of units appears right before address pointed by unitsPtr
+        if (!ReadC3CMemory(bic.unitsPtr - sizeof(DWORD), &nUnits,
+                           sizeof(DWORD))) {
+                return 1;
+        }
+        printf("Number of units: %d\n", nUnits);
+        UnitRule* unitRules = (UnitRule*) malloc(nUnits * sizeof(UnitRule));
+        if (!ReadC3CMemory(bic.unitsPtr, unitRules,
+                           nUnits * sizeof(UnitRule))) {
+                return 1;
+        }
+        for (i = 0; i < nUnits; ++i) {
+                printf("Unit #%03d - %s (%d.%d.%d) / %d shields:\n",
+                       i, unitRules[i].name,
+                       unitRules[i].attack, unitRules[i].defense,
+                       unitRules[i].movement, unitRules[i].shieldCost);
+        }
+
         DWORD nPlayers;
         // number of players appears right before address pointed by playersPtr
         if (!ReadC3CMemory(bic.playersPtr - sizeof(DWORD), &nPlayers,
@@ -182,25 +201,6 @@ int main(int argc, char** argv) {
         for (i = 0; i < 32; ++i) {
                printf("Leader #%02d - %s\n", i,
                        raceRules[leaders[i].nationality].civName);
-        }
-
-        DWORD nUnits;
-        // number of units appears right before address pointed by unitsPtr
-        if (!ReadC3CMemory(bic.unitsPtr - sizeof(DWORD), &nUnits,
-                           sizeof(DWORD))) {
-                return 1;
-        }
-        printf("Number of units: %d\n", nUnits);
-        UnitRule* unitRules = (UnitRule*) malloc(nUnits * sizeof(UnitRule));
-        if (!ReadC3CMemory(bic.unitsPtr, unitRules,
-                           nUnits * sizeof(UnitRule))) {
-                return 1;
-        }
-        for (i = 0; i < nUnits; ++i) {
-                printf("Unit #%03d - %s (%d.%d.%d) / %d shields:\n",
-                       i, unitRules[i].name,
-                       unitRules[i].attack, unitRules[i].defense,
-                       unitRules[i].movement, unitRules[i].shieldCost);
         }
 
         // in-game units are stored as an array of pointers to the unit data,
