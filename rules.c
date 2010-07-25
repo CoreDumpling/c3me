@@ -120,6 +120,17 @@ int main(int argc, char** argv) {
                 printf("Government #%02d - %s:\n", i, govtRules[i].name);
         }
 
+        BuildingRule* bldgRules =
+            (BuildingRule*) malloc(bic.nBuildings * sizeof(BuildingRule));
+        if (!ReadC3CMemory(bic.buildingsPtr, bldgRules,
+                           bic.nBuildings * sizeof(BuildingRule))) {
+                return 1;
+        }
+        for (i = 0; i < bic.nBuildings; ++i) {
+                printf("Building #%03d: %s (%d shields)\n",
+                       i, bldgRules[i].name, bldgRules[i].cost * 10);
+        }
+
         printf("Number of resources: %d\n", bic.nResources);
         ResourceRule* resRules =
             (ResourceRule*) malloc(bic.nResources * sizeof(ResourceRule));
@@ -264,6 +275,7 @@ int main(int argc, char** argv) {
         free(cultureRules);
         free(difficultyRules);
         free(govtRules);
+        free(bldgRules);
         free(resRules);
         free(unitRules);
         free(playerData);

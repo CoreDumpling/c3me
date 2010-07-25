@@ -314,6 +314,49 @@ typedef struct {
         DWORD warWeariness;
 } GovtRule;
 
+// Improvements and Wonders tab in rules editor
+typedef struct {
+        DWORD no_idea_1; // zero?
+        char description[64]; // blank?
+        char name[32];
+        char pedia[32];
+        DWORD doublesHappinessOf;
+        DWORD gainInEveryCity;
+        DWORD gainInEveryCityOnContinent;
+        DWORD requiredBuilding;
+        DWORD cost;
+        DWORD culture;
+        DWORD bombardDefense;
+        DWORD navalBombardDefense;
+        DWORD defenseBonus;
+        DWORD navalDefenseBonus;
+        DWORD maintenance;
+        DWORD happyFacesAllCities;
+        DWORD happyFaces;
+        DWORD unhappyFacesAllCities;
+        DWORD unhappyFaces;
+        DWORD numRequiredBuildings;
+        DWORD airPower;
+        DWORD navalPower;
+        DWORD pollution;
+        DWORD production;
+        DWORD requiredGovt;
+        DWORD spaceshipPart;
+        DWORD requiredTech;
+        DWORD obsoleteBy;
+        DWORD requiredResource1;
+        DWORD requiredResource2;
+        DWORD improvementFlags;
+        DWORD otherCharacteristics;
+        DWORD smallWonderFlags;
+        DWORD wonderFlags;
+        DWORD numArmies;
+        DWORD flavors;
+        DWORD no_idea_2;
+        DWORD unitProduced;
+        DWORD unitFrequency;
+} BuildingRule;
+
 // Natural Resources tab in rules editor
 typedef struct {
         DWORD no_idea_1;
