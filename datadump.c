@@ -119,6 +119,34 @@ int dump_bic() {
         return 0;
 }
 
+int dump_lead(int leadId) {
+        DWORD leadPtr;
+        Leader lead;
+        if (!ReadC3CMemory(LEADERS_BEGIN_ADDR + leadId * sizeof(Leader),
+                           &lead, sizeof(Leader))) {
+                return 1;
+        }
+        PRINT_STR(lead, LEAD);
+        PRINT_DWORD_BUF(lead, no_idea_1, "0x%08x");
+        PRINT_DWORD(lead, id, "%d");
+        PRINT_DWORD(lead, nationality, "%d");
+        PRINT_DWORD_BUF(lead, no_idea_2, "0x%08x");
+        PRINT_DWORD(lead, capitalCityId, "%d");
+        PRINT_DWORD_BUF(lead, no_idea_3, "0x%08x");
+        PRINT_DWORD(lead, beakers, "%d");
+        PRINT_DWORD(lead, researchTech, "%d");
+        PRINT_DWORD_BUF(lead, no_idea_4, "0x%08x");
+        PRINT_DWORD(lead, nUnits, "%d");
+        PRINT_DWORD_BUF(lead, no_idea_5, "0x%08x");
+        PRINT_DWORD(lead, luxury, "%d");
+        PRINT_DWORD(lead, science, "%d");
+        PRINT_DWORD(lead, tax, "%d");
+        PRINT_DWORD_BUF(lead, no_idea_6, "0x%08x");
+        PRINT_DWORD_BUF(lead, contacts, "%d");
+        PRINT_DWORD_BUF(lead, no_idea_7, "0x%08x");
+        return 0;
+}
+
 int dump_unit(int unitId) {
         DWORD unitsPtr;
         DWORD unitValid, unitValidPtr;
@@ -177,6 +205,7 @@ void print_usage() {
         fprintf(stderr, "Usage: datadump <data-type> [<id>]\n");
         fprintf(stderr, "data-type may be:\n");
         fprintf(stderr, "\tbic\n");
+        fprintf(stderr, "\tleader\n");
         fprintf(stderr, "\tunit\n");
 }
 
@@ -188,6 +217,13 @@ int main(int argc, char** argv) {
 
         if (!strcmp("bic", argv[1])) {
                 return dump_bic();
+        } else if (!strcmp("leader", argv[1])) {
+                if (argc < 3) {
+                        fprintf(stderr, "Leader id required\n");
+                        print_usage();
+                        return 1;
+                }
+                return dump_lead(atoi(argv[2]));
         } else if (!strcmp("unit", argv[1])) {
                 if (argc < 3) {
                         fprintf(stderr, "Unit id required\n");
