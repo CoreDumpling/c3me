@@ -6,10 +6,10 @@ c3c.o: c3c.c c3c.h
 rules.exe: rules.c c3c.o
 	gcc $^ -o $@
 
-bicdump.exe: bicdump.c c3c.o
+unitdump.exe: unitdump.c c3c.o
 	gcc $^ -o $@
 
-unitdump.exe: unitdump.c c3c.o
+datadump.exe: datadump.c c3c.o
 	gcc $^ -o $@
 
 clean:
