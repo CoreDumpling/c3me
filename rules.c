@@ -100,6 +100,16 @@ int main(int argc, char** argv) {
                        unitRecs[i].movement, unitRecs[i].shieldCost);
         }
 
+        // there are always 4 combat experience levels
+        Experience exp[4];
+        if (!ReadC3CMemory(bic.experiencePtr, &exp, sizeof(exp))) {
+                return 1;
+        }
+        for (i = 0; i < 4; ++i) {
+                printf("Experience level: %s (%d hp, %d retreat)\n",
+                       exp[i].name, exp[i].hp, exp[i].retreatBonus);
+        }
+
         // in-game units are stored as an array of pointers to the unit data,
         // with an integer before each pointer indicating if it is valid
         // total number of units in-game stored at NUM_UNITS_ADDR

@@ -360,6 +360,13 @@ typedef struct {
 } Citizen;
 
 typedef struct {
+	DWORD no_idea_1; // zero?
+	char name[32];
+	DWORD hp;
+	DWORD retreatBonus;
+} Experience;
+
+typedef struct {
         char LEAD[4]; // "LEAD"
         DWORD no_idea_1[4];
         DWORD id;
