@@ -173,6 +173,16 @@ int main(int argc, char** argv) {
                        unitRules[i].movement, unitRules[i].shieldCost);
         }
 
+        // there are always 13 worker jobs
+        WorkerRule workerRules[13];
+        if (!ReadC3CMemory(bic.workerJobsPtr, workerRules,
+                           sizeof(workerRules))) {
+                return 1;
+        }
+        for (i = 0; i < 13; ++i) {
+                printf("Worker job #%02d: %s\n", i, workerRules[i].name);
+        }
+
         DWORD nPlayers;
         // number of players appears right before address pointed by playersPtr
         if (!ReadC3CMemory(bic.playersPtr - sizeof(DWORD), &nPlayers,

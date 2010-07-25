@@ -462,6 +462,18 @@ typedef struct {
         DWORD no_idea_6[12];
 } UnitRule;
 
+// Worker Jobs tab in rules editor
+typedef struct {
+        DWORD no_idea_1; // zero?
+        char name[32];
+        char pedia[32];
+        DWORD turns;
+        DWORD requiredTech;
+        DWORD requiredResource1;
+        DWORD requiredResource2;
+        char order[32];
+} WorkerRule;
+
 // Player data from scenario properties
 typedef struct {
         DWORD customCivData;
