@@ -374,6 +374,45 @@ typedef struct {
         DWORD commerce;
 } ResourceRule;
 
+// Terrain tab in rules editor
+typedef struct {
+        DWORD no_idea_1[3];
+        char name[32];
+        char pedia[32];
+        DWORD irrigationBonus;
+        DWORD mineBonus;
+        DWORD roadBonus;
+        DWORD defenseBonus;
+        DWORD movementCost;
+        DWORD no_idea_2; // 0x1A? -- possibly number of resources?
+        DWORD food;
+        DWORD shields;
+        DWORD commerce;
+        DWORD workerJob; // only plant forest, clear forest, clear wetlands
+        DWORD pollutionEffect;
+        BYTE allowCities;
+        BYTE allowColonies;
+        BYTE impassable;
+        BYTE impassableByWheeled;
+        BYTE allowAirfields;
+        BYTE allowForts;
+        BYTE allowRadarTowers;
+        DWORD no_idea_3; // 0x03?
+        DWORD landmarkEnabled; // seems to be first byte only
+        DWORD landmarkFood;
+        DWORD landmarkShields;
+        DWORD landmarkCommerce;
+        DWORD landmarkIrrigationBonus;
+        DWORD landmarkMineBonus;
+        DWORD landmarkRoadBonus;
+        DWORD landmarkMovementCost;
+        DWORD landmarkDefenseBonus;
+        char landmarkName[32];
+        char landmarkPedia[32];
+        DWORD no_idea_4; // 0xc0cccccc?
+        DWORD diseaseStrength;
+} TerrainRule;
+
 // Units tab in rules editor
 typedef struct {
         DWORD no_idea_1;

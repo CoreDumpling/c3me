@@ -142,6 +142,18 @@ int main(int argc, char** argv) {
                 printf("%s: %s\n", resRules[i].name, resRules[i].pedia);
         }
 
+        // there are always 14 terrain types
+        TerrainRule terrainRules[14];
+        if (!ReadC3CMemory(bic.terrainPtr, terrainRules,
+                           sizeof(terrainRules))) {
+                return 1;
+        }
+        for (i = 0; i < 14; ++i) {
+                printf("Terrain #%02d: %s (%df %ds %dg)\n", i,
+                       terrainRules[i].name, terrainRules[i].food,
+                       terrainRules[i].shields, terrainRules[i].commerce);
+        }
+
         DWORD nPlayers;
         // number of players appears right before address pointed by playersPtr
         if (!ReadC3CMemory(bic.playersPtr - sizeof(DWORD), &nPlayers,
