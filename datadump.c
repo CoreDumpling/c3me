@@ -5,7 +5,7 @@
 
 #define PRINT_STR(data, field) \
         do { \
-                printf(#data "+%04x " #field ": %.*s\n", \
+                printf(#data "+%04x (" #field "): %.*s\n", \
                        (int) &data.field - (int) &data, sizeof(data.field), \
                        data.field); \
         } while (0);
