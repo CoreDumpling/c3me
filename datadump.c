@@ -133,17 +133,22 @@ int dump_lead(int leadId) {
         PRINT_DWORD_BUF(lead, no_idea_2, "0x%08x");
         PRINT_DWORD(lead, capitalCityId, "%d");
         PRINT_DWORD_BUF(lead, no_idea_3, "0x%08x");
+        PRINT_DWORD(lead, posGold, "%d");
+        PRINT_DWORD(lead, negGold, "%d");
+        PRINT_DWORD_BUF(lead, no_idea_4, "0x%08x");
+        PRINT_DWORD(lead, govt, "%d");
+        PRINT_DWORD_BUF(lead, no_idea_5, "0x%08x");
         PRINT_DWORD(lead, beakers, "%d");
         PRINT_DWORD(lead, researchTech, "%d");
-        PRINT_DWORD_BUF(lead, no_idea_4, "0x%08x");
+        PRINT_DWORD_BUF(lead, no_idea_6, "0x%08x");
         PRINT_DWORD(lead, nUnits, "%d");
-        PRINT_DWORD_BUF(lead, no_idea_5, "0x%08x");
+        PRINT_DWORD_BUF(lead, no_idea_7, "0x%08x");
         PRINT_DWORD(lead, luxury, "%d");
         PRINT_DWORD(lead, science, "%d");
         PRINT_DWORD(lead, tax, "%d");
-        PRINT_DWORD_BUF(lead, no_idea_6, "0x%08x");
+        PRINT_DWORD_BUF(lead, no_idea_8, "0x%08x");
         PRINT_DWORD_BUF(lead, contacts, "%d");
-        PRINT_DWORD_BUF(lead, no_idea_7, "0x%08x");
+        PRINT_DWORD_BUF(lead, no_idea_9, "0x%08x");
         return 0;
 }
 

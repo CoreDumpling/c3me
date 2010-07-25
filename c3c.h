@@ -364,20 +364,25 @@ typedef struct {
         DWORD no_idea_1[4];
         DWORD id;
         DWORD nationality;
-        DWORD no_idea_2[2];
+	DWORD no_idea_2[2];
         DWORD capitalCityId;
-        DWORD no_idea_3[50];
+        DWORD no_idea_3[5];
+        DWORD posGold; // total gold is posGold + negGold
+	DWORD negGold; // negGold is a negative number
+        DWORD no_idea_4[21];
+	DWORD govt;
+        DWORD no_idea_5[21];
         DWORD beakers;
         DWORD researchTech;
-        DWORD no_idea_4[35];
+        DWORD no_idea_6[35];
         DWORD nUnits; // number of units owned by this civ
-        DWORD no_idea_5[5];
+        DWORD no_idea_7[5];
         DWORD luxury;
         DWORD science;
         DWORD tax;
-        DWORD no_idea_6[832];
+        DWORD no_idea_8[832];
         DWORD contacts[32];
-        DWORD no_idea_7[1135];
+        DWORD no_idea_9[1135];
 } Leader;
 
 extern BOOL ReadC3CMemory(DWORD lpAddress, void* buf, int len);
