@@ -100,31 +100,40 @@ int main(int argc, char** argv) {
                        unitRecs[i].movement, unitRecs[i].shieldCost);
         }
 
+        // in-game units are stored as an array of pointers to the unit data,
+        // with an integer before each pointer indicating if it is valid
+        // total number of units in-game stored at NUM_UNITS_ADDR
         DWORD unitsPtr;
         DWORD unitValid;
         DWORD unitPtr;
+        DWORD unitCount;
+        if (!ReadC3CMemory(NUM_UNITS_ADDR, &unitCount, sizeof(DWORD))) {
+                return 1;
+        }
+        printf("Units in game: %d\n", unitCount);
         if (!ReadC3CMemory(UNITS_BEGIN_ADDR, &unitsPtr, sizeof(DWORD))) {
                 return 1;
         }
-        printf("%x\n", unitsPtr);
-        do {
+        for (i = 0; i < unitCount; unitsPtr += sizeof(DWORD)) {
                 ReadC3CMemory(unitsPtr, &unitValid, sizeof(DWORD));
                 unitsPtr += sizeof(DWORD);
                 if (unitValid != 0xffffffff) {
                         continue;
                 }
                 ReadC3CMemory(unitsPtr, &unitPtr, sizeof(DWORD));
-                if (unitPtr == 0) {
-                        break;
+                if (!unitPtr) {
+                        continue;
                 }
+
+                // if we get this far, it's a valid unit in-game
                 Unit unit;
                 ReadC3CMemory(unitPtr, &unit, sizeof(Unit));
                 printf("Unit #%04d - %s, %s (%d,%d):\n",
                        unit.id,
                        raceRecs[leaders[unit.owner].nationality].civName,
                        unitRecs[unit.type].name, unit.x, unit.y);
-                unitsPtr += sizeof(DWORD);
-        } while (!(unitValid == 0xffffffff && unitPtr == 0));
+                ++i;
+        }
 
         DWORD citiesPtr;
         DWORD cityValid;
