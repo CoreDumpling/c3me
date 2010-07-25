@@ -36,7 +36,8 @@ typedef struct {
 	DWORD nCitizens; // number of citizen types (for citizensPtr)
         DWORD no_idea_6b;
 	DWORD nCulturalOpinions;
-        DWORD no_idea_6c[4];
+        DWORD nDifficultyLevels;
+        DWORD no_idea_6c[3];
         DWORD nResources;
         DWORD no_idea_7;
         DWORD nPlayers;
@@ -227,6 +228,26 @@ typedef struct {
 	DWORD initialResistanceChance;
 	DWORD continuedResistanceChance;
 } CultureRule;
+
+// Difficulty levels tab in rules editor
+typedef struct {
+	DWORD no_idea_1; // zero?
+	char name[64];
+	DWORD bornContent;
+	DWORD maxGovtTransitionTime;
+	DWORD aiDefensiveLandUnits;
+	DWORD aiOffensiveLandUnits;
+	DWORD aiExtraStartUnit1;
+	DWORD aiExtraStartUnit2;
+	DWORD aiFreeSupport;
+	DWORD aiBonusSupportPerCity;
+	DWORD bonusVsBarbs;
+	DWORD costFactor;
+	DWORD percentOptimalCities;
+	DWORD aiTradeRate;
+	DWORD corruption; // percent
+	DWORD citizensQuelledByMilitary;
+} DifficultyRule;
 
 // Governments tab in rules editor
 typedef struct {

@@ -73,6 +73,19 @@ int main(int argc, char** argv) {
                        cultureRules[i].cultureRatioDenominator);
         }
 
+        DifficultyRule* difficultyRules =
+            (DifficultyRule*) malloc(bic.nDifficultyLevels *
+                                  sizeof(DifficultyRule));
+        if (!ReadC3CMemory(bic.difficultyPtr, difficultyRules,
+                           bic.nDifficultyLevels * sizeof(DifficultyRule))) {
+                return 1;
+        }
+        for (i = 0; i < bic.nDifficultyLevels; ++i) {
+                printf("Difficulty level: %s (cost factor %d)\n",
+                       difficultyRules[i].name,
+                       difficultyRules[i].costFactor);
+        }
+
         DWORD nGovts;
         // number of govts appears right before address pointed by govtsPtr
         if (!ReadC3CMemory(bic.govtsPtr - sizeof(DWORD), &nGovts,
@@ -230,6 +243,8 @@ int main(int argc, char** argv) {
 
         free(citizenRules);
         free(raceRules);
+        free(cultureRules);
+        free(difficultyRules);
         free(govtRules);
         free(resRules);
         free(unitRules);
