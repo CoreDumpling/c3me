@@ -115,6 +115,7 @@ int dump_bic() {
         PRINT_DWORD_BUF(bic, no_idea_21, "0x%08x");
         PRINT_DWORD(bic, techsPtr, "0x%08x");
         PRINT_DWORD(bic, workerJobsPtr, "0x%08x");
+        PRINT_DWORD(bic, terrainPtr, "0x%08x");
         PRINT_DWORD(bic, no_idea_22_ptr, "0x%08x");
         PRINT_DWORD(bic, worldSizesPtr, "0x%08x");
         PRINT_DWORD(bic, no_idea_23_ptr, "0x%08x");
