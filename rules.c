@@ -15,9 +15,9 @@ int main(int argc, char** argv) {
                 return 1;
         }
         printf("Number of races: %d\n", nRaces);
-        RaceRec* raceRecs = (RaceRec*) malloc(nRaces * sizeof(RaceRec));
+        RaceRule* raceRecs = (RaceRule*) malloc(nRaces * sizeof(RaceRule));
         if (!ReadC3CMemory(bic.racesPtr, raceRecs,
-                           nRaces * sizeof(RaceRec))) {
+                           nRaces * sizeof(RaceRule))) {
                 return 1;
         }
         for (i = 0; i < nRaces; ++i) {
@@ -25,10 +25,10 @@ int main(int argc, char** argv) {
         }
 
         printf("Number of resources: %d\n", bic.nResources);
-        ResourceRec* resRecs =
-            (ResourceRec*) malloc(bic.nResources * sizeof(ResourceRec));
+        ResourceRule* resRecs =
+            (ResourceRule*) malloc(bic.nResources * sizeof(ResourceRule));
         if (!ReadC3CMemory(bic.resourcesPtr, resRecs,
-                           bic.nResources * sizeof(ResourceRec))) {
+                           bic.nResources * sizeof(ResourceRule))) {
                 return 1;
         }
         for (i = 0; i < bic.nResources; ++i) {
@@ -42,9 +42,9 @@ int main(int argc, char** argv) {
                 return 1;
         }
         printf("Number of governments: %d\n", nGovts);
-        GovtRec* govtRecs = (GovtRec*) malloc(nGovts * sizeof(GovtRec));
+        GovtRule* govtRecs = (GovtRule*) malloc(nGovts * sizeof(GovtRule));
         if (!ReadC3CMemory(bic.govtsPtr, govtRecs,
-                           nGovts * sizeof(GovtRec))) {
+                           nGovts * sizeof(GovtRule))) {
                 return 1;
         }
         for (i = 0; i < nGovts; ++i) {
@@ -58,11 +58,11 @@ int main(int argc, char** argv) {
                 return 1;
         }
         printf("Number of players: %d\n", nPlayers);
-        PlayerRec* playerRecs =
-            (PlayerRec*) malloc(nPlayers * sizeof(PlayerRec));
+        PlayerData* playerRecs =
+            (PlayerData*) malloc(nPlayers * sizeof(PlayerData));
         // no idea what the first 4 bytes are, but they don't match a player
         if (!ReadC3CMemory(bic.playersPtr + sizeof(DWORD), playerRecs,
-                           nPlayers * sizeof(PlayerRec))) {
+                           nPlayers * sizeof(PlayerData))) {
                 return 1;
         }
         for (i = 0; i < nPlayers; ++i) {
@@ -88,9 +88,9 @@ int main(int argc, char** argv) {
                 return 1;
         }
         printf("Number of units: %d\n", nUnits);
-        UnitRec* unitRecs = (UnitRec*) malloc(nUnits * sizeof(UnitRec));
+        UnitRule* unitRecs = (UnitRule*) malloc(nUnits * sizeof(UnitRule));
         if (!ReadC3CMemory(bic.unitsPtr, unitRecs,
-                           nUnits * sizeof(UnitRec))) {
+                           nUnits * sizeof(UnitRule))) {
                 return 1;
         }
         for (i = 0; i < nUnits; ++i) {
@@ -101,7 +101,7 @@ int main(int argc, char** argv) {
         }
 
         // there are always 4 combat experience levels
-        Experience exp[4];
+        ExpRule exp[4];
         if (!ReadC3CMemory(bic.experiencePtr, &exp, sizeof(exp))) {
                 return 1;
         }

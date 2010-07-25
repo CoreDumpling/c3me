@@ -170,7 +170,7 @@ typedef struct {
         DWORD dipTextIndex;
         DWORD numSciLeaders;
         DWORD sciLeadersPtr;
-} RaceRec;
+} RaceRule;
 
 typedef struct {
         DWORD no_idea_1;
@@ -186,7 +186,7 @@ typedef struct {
         DWORD food;
         DWORD shields;
         DWORD commerce;
-} ResourceRec;
+} ResourceRule;
 
 typedef struct {
         DWORD no_idea_1[3];
@@ -230,26 +230,7 @@ typedef struct {
         DWORD freeUnitsPerMetro;
         DWORD costPerUnit;
         DWORD warWeariness;
-} GovtRec;
-
-typedef struct {
-        DWORD customCivData;
-        DWORD humanPlayer;
-        char leaderName[32];
-        DWORD no_idea_1[2];
-        DWORD numStartUnits;
-        DWORD no_idea_2;
-        DWORD startTechsPtr;
-        DWORD difficulty;
-        DWORD initialEra;
-        DWORD startGold;
-        DWORD government;
-        DWORD numStartTechs;
-        DWORD no_idea_3;
-        DWORD civId;
-        DWORD color;
-        DWORD no_idea_4[4];
-} PlayerRec;
+} GovtRule;
 
 typedef struct {
         DWORD no_idea_1;
@@ -297,7 +278,33 @@ typedef struct {
         DWORD no_idea_5;
         DWORD airDefense;
         DWORD no_idea_6[12];
-} UnitRec;
+} UnitRule;
+
+typedef struct {
+	DWORD no_idea_1; // zero?
+	char name[32];
+	DWORD hp;
+	DWORD retreatBonus;
+} ExpRule;
+
+typedef struct {
+        DWORD customCivData;
+        DWORD humanPlayer;
+        char leaderName[32];
+        DWORD no_idea_1[2];
+        DWORD numStartUnits;
+        DWORD no_idea_2;
+        DWORD startTechsPtr;
+        DWORD difficulty;
+        DWORD initialEra;
+        DWORD startGold;
+        DWORD government;
+        DWORD numStartTechs;
+        DWORD no_idea_3;
+        DWORD civId;
+        DWORD color;
+        DWORD no_idea_4[4];
+} PlayerData;
 
 typedef struct {
         DWORD no_idea_1;
@@ -358,13 +365,6 @@ typedef struct {
         DWORD race;
         DWORD no_idea_4[3];
 } Citizen;
-
-typedef struct {
-	DWORD no_idea_1; // zero?
-	char name[32];
-	DWORD hp;
-	DWORD retreatBonus;
-} Experience;
 
 typedef struct {
         char LEAD[4]; // "LEAD"
