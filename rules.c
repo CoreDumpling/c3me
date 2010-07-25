@@ -51,13 +51,13 @@ int main(int argc, char** argv) {
         }
 
         // there are always 4 combat experience levels
-        ExpRule exp[4];
-        if (!ReadC3CMemory(bic.experiencePtr, &exp, sizeof(exp))) {
+        ExpRule expRule[4];
+        if (!ReadC3CMemory(bic.experiencePtr, &expRule, sizeof(expRule))) {
                 return 1;
         }
         for (i = 0; i < 4; ++i) {
                 printf("Experience level: %s (%d hp, %d retreat)\n",
-                       exp[i].name, exp[i].hp, exp[i].retreatBonus);
+                       expRule[i].name, expRule[i].hp, expRule[i].retreatBonus);
         }
 
         CultureRule* cultureRules =
