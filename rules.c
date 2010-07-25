@@ -31,89 +31,13 @@ int main(int argc, char** argv) {
                 return 1;
         }
         printf("Number of races: %d\n", nRaces);
-        RaceRule* raceRecs = (RaceRule*) malloc(nRaces * sizeof(RaceRule));
-        if (!ReadC3CMemory(bic.racesPtr, raceRecs,
+        RaceRule* raceRules = (RaceRule*) malloc(nRaces * sizeof(RaceRule));
+        if (!ReadC3CMemory(bic.racesPtr, raceRules,
                            nRaces * sizeof(RaceRule))) {
                 return 1;
         }
         for (i = 0; i < nRaces; ++i) {
-                printf("Civ #%02d - %s:\n", i, raceRecs[i].civName);
-        }
-
-        printf("Number of resources: %d\n", bic.nResources);
-        ResourceRule* resRecs =
-            (ResourceRule*) malloc(bic.nResources * sizeof(ResourceRule));
-        if (!ReadC3CMemory(bic.resourcesPtr, resRecs,
-                           bic.nResources * sizeof(ResourceRule))) {
-                return 1;
-        }
-        for (i = 0; i < bic.nResources; ++i) {
-                printf("%s: %s\n", resRecs[i].name, resRecs[i].pedia);
-        }
-
-        DWORD nGovts;
-        // number of govts appears right before address pointed by govtsPtr
-        if (!ReadC3CMemory(bic.govtsPtr - sizeof(DWORD), &nGovts,
-                           sizeof(DWORD))) {
-                return 1;
-        }
-        printf("Number of governments: %d\n", nGovts);
-        GovtRule* govtRecs = (GovtRule*) malloc(nGovts * sizeof(GovtRule));
-        if (!ReadC3CMemory(bic.govtsPtr, govtRecs,
-                           nGovts * sizeof(GovtRule))) {
-                return 1;
-        }
-        for (i = 0; i < nGovts; ++i) {
-                printf("Government #%02d - %s:\n", i, govtRecs[i].name);
-        }
-
-        DWORD nPlayers;
-        // number of players appears right before address pointed by playersPtr
-        if (!ReadC3CMemory(bic.playersPtr - sizeof(DWORD), &nPlayers,
-                           sizeof(DWORD))) {
-                return 1;
-        }
-        printf("Number of players: %d\n", nPlayers);
-        PlayerData* playerRecs =
-            (PlayerData*) malloc(nPlayers * sizeof(PlayerData));
-        // no idea what the first 4 bytes are, but they don't match a player
-        if (!ReadC3CMemory(bic.playersPtr + sizeof(DWORD), playerRecs,
-                           nPlayers * sizeof(PlayerData))) {
-                return 1;
-        }
-        for (i = 0; i < nPlayers; ++i) {
-                // the index i starts at zero, but counts from "Player 1"
-                printf("Player #%02d - %s (%s):\n", i + 1,
-                       raceRecs[playerRecs[i].civId].civName,
-                       govtRecs[playerRecs[i].government].name);
-        }
-
-        Leader leaders[32];
-        if (!ReadC3CMemory(LEADERS_BEGIN_ADDR, &leaders, sizeof(leaders))) {
-                return 1;
-        }
-        for (i = 0; i < 32; ++i) {
-               printf("Leader #%02d - %s\n", i,
-                       raceRecs[leaders[i].nationality].civName);
-        }
-
-        DWORD nUnits;
-        // number of units appears right before address pointed by unitsPtr
-        if (!ReadC3CMemory(bic.unitsPtr - sizeof(DWORD), &nUnits,
-                           sizeof(DWORD))) {
-                return 1;
-        }
-        printf("Number of units: %d\n", nUnits);
-        UnitRule* unitRecs = (UnitRule*) malloc(nUnits * sizeof(UnitRule));
-        if (!ReadC3CMemory(bic.unitsPtr, unitRecs,
-                           nUnits * sizeof(UnitRule))) {
-                return 1;
-        }
-        for (i = 0; i < nUnits; ++i) {
-                printf("Unit #%03d - %s (%d.%d.%d) / %d shields:\n",
-                       i, unitRecs[i].name,
-                       unitRecs[i].attack, unitRecs[i].defense,
-                       unitRecs[i].movement, unitRecs[i].shieldCost);
+                printf("Civ #%02d - %s:\n", i, raceRules[i].civName);
         }
 
         // there are always 4 combat experience levels
@@ -124,6 +48,82 @@ int main(int argc, char** argv) {
         for (i = 0; i < 4; ++i) {
                 printf("Experience level: %s (%d hp, %d retreat)\n",
                        exp[i].name, exp[i].hp, exp[i].retreatBonus);
+        }
+
+        DWORD nGovts;
+        // number of govts appears right before address pointed by govtsPtr
+        if (!ReadC3CMemory(bic.govtsPtr - sizeof(DWORD), &nGovts,
+                           sizeof(DWORD))) {
+                return 1;
+        }
+        printf("Number of governments: %d\n", nGovts);
+        GovtRule* govtRules = (GovtRule*) malloc(nGovts * sizeof(GovtRule));
+        if (!ReadC3CMemory(bic.govtsPtr, govtRules,
+                           nGovts * sizeof(GovtRule))) {
+                return 1;
+        }
+        for (i = 0; i < nGovts; ++i) {
+                printf("Government #%02d - %s:\n", i, govtRules[i].name);
+        }
+
+        printf("Number of resources: %d\n", bic.nResources);
+        ResourceRule* resRules =
+            (ResourceRule*) malloc(bic.nResources * sizeof(ResourceRule));
+        if (!ReadC3CMemory(bic.resourcesPtr, resRules,
+                           bic.nResources * sizeof(ResourceRule))) {
+                return 1;
+        }
+        for (i = 0; i < bic.nResources; ++i) {
+                printf("%s: %s\n", resRules[i].name, resRules[i].pedia);
+        }
+
+        DWORD nPlayers;
+        // number of players appears right before address pointed by playersPtr
+        if (!ReadC3CMemory(bic.playersPtr - sizeof(DWORD), &nPlayers,
+                           sizeof(DWORD))) {
+                return 1;
+        }
+        printf("Number of players: %d\n", nPlayers);
+        PlayerData* playerData =
+            (PlayerData*) malloc(nPlayers * sizeof(PlayerData));
+        // no idea what the first 4 bytes are, but they don't match a player
+        if (!ReadC3CMemory(bic.playersPtr + sizeof(DWORD), playerData,
+                           nPlayers * sizeof(PlayerData))) {
+                return 1;
+        }
+        for (i = 0; i < nPlayers; ++i) {
+                // the index i starts at zero, but counts from "Player 1"
+                printf("Player #%02d - %s (%s):\n", i + 1,
+                       raceRules[playerData[i].civId].civName,
+                       govtRules[playerData[i].government].name);
+        }
+
+        Leader leaders[32];
+        if (!ReadC3CMemory(LEADERS_BEGIN_ADDR, &leaders, sizeof(leaders))) {
+                return 1;
+        }
+        for (i = 0; i < 32; ++i) {
+               printf("Leader #%02d - %s\n", i,
+                       raceRules[leaders[i].nationality].civName);
+        }
+
+        DWORD nUnits;
+        // number of units appears right before address pointed by unitsPtr
+        if (!ReadC3CMemory(bic.unitsPtr - sizeof(DWORD), &nUnits,
+                           sizeof(DWORD))) {
+                return 1;
+        }
+        printf("Number of units: %d\n", nUnits);
+        UnitRule* unitRules = (UnitRule*) malloc(nUnits * sizeof(UnitRule));
+        if (!ReadC3CMemory(bic.unitsPtr, unitRules,
+                           nUnits * sizeof(UnitRule))) {
+                return 1;
+        }
+        for (i = 0; i < nUnits; ++i) {
+                printf("Unit #%03d - %s (%d.%d.%d) / %d shields:\n",
+                       i, unitRules[i].name,
+                       unitRules[i].attack, unitRules[i].defense,
+                       unitRules[i].movement, unitRules[i].shieldCost);
         }
 
         // in-game units are stored as an array of pointers to the unit data,
@@ -156,8 +156,8 @@ int main(int argc, char** argv) {
                 ReadC3CMemory(unitPtr, &unit, sizeof(Unit));
                 printf("Unit #%04d - %s, %s (%d,%d):\n",
                        unit.id,
-                       raceRecs[leaders[unit.owner].nationality].civName,
-                       unitRecs[unit.type].name, unit.x, unit.y);
+                       raceRules[leaders[unit.owner].nationality].civName,
+                       unitRules[unit.type].name, unit.x, unit.y);
                 ++i;
         }
 
@@ -206,10 +206,10 @@ int main(int argc, char** argv) {
         } while (!(cityValid == 0xffffffff && cityPtr == 0));
 
         free(citizenRules);
-        free(raceRecs);
-        free(resRecs);
-        free(unitRecs);
-        free(playerRecs);
-        free(govtRecs);
+        free(raceRules);
+        free(govtRules);
+        free(resRules);
+        free(unitRules);
+        free(playerData);
         return 0;
 }
