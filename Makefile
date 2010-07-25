@@ -1,4 +1,4 @@
-all: rules.exe
+all: rules.exe datadump.exe
 
 c3c.o: c3c.c c3c.h
 	gcc -c c3c.c -o $@
