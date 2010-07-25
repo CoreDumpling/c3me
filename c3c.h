@@ -258,6 +258,15 @@ typedef struct {
         DWORD baseCost;
 } SpyRule;
 
+typedef struct {
+        DWORD no_idea_1; // zero?
+        char name[64];
+        char pedia[32];
+        char researchers[32][5];
+        DWORD nResearchers;
+        DWORD no_idea_2; // one?
+} EraRule;
+
 // Governments tab in rules editor
 typedef struct {
         DWORD no_idea_1[3];

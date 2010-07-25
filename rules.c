@@ -95,6 +95,15 @@ int main(int argc, char** argv) {
                 printf("Diplomatic/Espionage mission: %s\n", spyRules[i].name);
         }
 
+        // there are always 4 eras
+        EraRule eraRules[4];
+        if (!ReadC3CMemory(bic.erasPtr, eraRules, sizeof(eraRules))) {
+                return 1;
+        }
+        for (i = 0; i < 4; ++i) {
+                printf("Era: %s\n", eraRules[i].name);
+        }
+
         DWORD nGovts;
         // number of govts appears right before address pointed by govtsPtr
         if (!ReadC3CMemory(bic.govtsPtr - sizeof(DWORD), &nGovts,
