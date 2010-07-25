@@ -249,6 +249,15 @@ typedef struct {
 	DWORD citizensQuelledByMilitary;
 } DifficultyRule;
 
+typedef struct {
+        DWORD no_idea_1; // zero?
+        char description[128];
+        char name[64];
+        char pedia[32];
+        DWORD performedBy; // mask: 0x0001 diplomat, 0x0002 spy
+        DWORD baseCost;
+} SpyRule;
+
 // Governments tab in rules editor
 typedef struct {
         DWORD no_idea_1[3];

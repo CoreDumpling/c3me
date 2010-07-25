@@ -86,6 +86,15 @@ int main(int argc, char** argv) {
                        difficultyRules[i].costFactor);
         }
 
+        // there are always 9 diplomatic / espionage missions
+        SpyRule spyRules[9];
+        if (!ReadC3CMemory(bic.espionagePtr, spyRules, sizeof(spyRules))) {
+                return 1;
+        }
+        for (i = 0; i < 9; ++i) {
+                printf("Diplomatic/Espionage mission: %s\n", spyRules[i].name);
+        }
+
         DWORD nGovts;
         // number of govts appears right before address pointed by govtsPtr
         if (!ReadC3CMemory(bic.govtsPtr - sizeof(DWORD), &nGovts,
