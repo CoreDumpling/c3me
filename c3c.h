@@ -34,7 +34,9 @@ typedef struct {
         DWORD nBuildings;
         DWORD no_idea_6;
 	DWORD nCitizens; // number of citizen types (for citizensPtr)
-        DWORD no_idea_6b[6];
+        DWORD no_idea_6b;
+	DWORD nCulturalOpinions;
+        DWORD no_idea_6c[4];
         DWORD nResources;
         DWORD no_idea_7;
         DWORD nPlayers;
@@ -213,6 +215,18 @@ typedef struct {
 	DWORD hp;
 	DWORD retreatBonus;
 } ExpRule;
+
+// Culture tab in rules editor
+typedef struct {
+	DWORD no_idea_1; // zero?
+	char opinion[64];
+	DWORD propagandaChance;
+	DWORD cultureRatioPercentage; // 3:1 is 300, 3:4 is 75
+	DWORD cultureRatioDenominator;
+	DWORD cultureRatioNumerator;
+	DWORD initialResistanceChance;
+	DWORD continuedResistanceChance;
+} CultureRule;
 
 // Governments tab in rules editor
 typedef struct {

@@ -60,6 +60,19 @@ int main(int argc, char** argv) {
                        exp[i].name, exp[i].hp, exp[i].retreatBonus);
         }
 
+        CultureRule* cultureRules =
+            (CultureRule*) malloc(bic.nCulturalOpinions * sizeof(CultureRule));
+        if (!ReadC3CMemory(bic.culturePtr, cultureRules,
+                           bic.nCulturalOpinions * sizeof(CultureRule))) {
+                return 1;
+        }
+        for (i = 0; i < bic.nCulturalOpinions; ++i) {
+                printf("Cultural opinion \"%s\" (%d:%d)\n",
+                       cultureRules[i].opinion,
+                       cultureRules[i].cultureRatioNumerator,
+                       cultureRules[i].cultureRatioDenominator);
+        }
+
         DWORD nGovts;
         // number of govts appears right before address pointed by govtsPtr
         if (!ReadC3CMemory(bic.govtsPtr - sizeof(DWORD), &nGovts,

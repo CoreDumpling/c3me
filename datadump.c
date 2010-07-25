@@ -49,7 +49,9 @@ int dump_bic() {
         PRINT_DWORD(bic, nBuildings, "%d");
         PRINT_DWORD(bic, no_idea_6, "%d");
         PRINT_DWORD(bic, nCitizens, "%d");
-        PRINT_DWORD_BUF(bic, no_idea_6b, "%d");
+        PRINT_DWORD(bic, no_idea_6b, "%d");
+        PRINT_DWORD(bic, nCulturalOpinions, "%d");
+        PRINT_DWORD_BUF(bic, no_idea_6c, "%d");
         PRINT_DWORD(bic, nResources, "%d");
         PRINT_DWORD(bic, no_idea_7, "%d");
         PRINT_DWORD(bic, nPlayers, "%d");
