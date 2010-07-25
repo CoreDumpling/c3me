@@ -190,6 +190,22 @@ typedef struct {
         DWORD sciLeadersPtr;
 } RaceRule;
 
+// Civilization advances tab in rules editor
+typedef struct {
+	DWORD no_idea_1; // zero?
+	char name[32];
+	char pedia[32];
+	DWORD cost;
+	DWORD era;
+	DWORD icon;
+	DWORD x; // tech tree position on screen
+	DWORD y; // tech tree position on screen
+	DWORD prerequisites[4];
+	DWORD flags;
+	DWORD flavors;
+	DWORD no_idea_2; // one?
+} TechRule;
+
 // Combat experience tab in rules editor
 typedef struct {
 	DWORD no_idea_1; // zero?

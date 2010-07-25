@@ -40,6 +40,16 @@ int main(int argc, char** argv) {
                 printf("Civ #%02d - %s:\n", i, raceRules[i].civName);
         }
 
+        TechRule* techRules =
+            (TechRule*) malloc(bic.nTechs * sizeof(TechRule));
+        if (!ReadC3CMemory(bic.techsPtr, techRules,
+                           bic.nTechs * sizeof(TechRule))) {
+                return 1;
+        }
+        for (i = 0; i < bic.nTechs; ++i) {
+                printf("Tech %d: %s\n", i, techRules[i].name);
+        }
+
         // there are always 4 combat experience levels
         ExpRule exp[4];
         if (!ReadC3CMemory(bic.experiencePtr, &exp, sizeof(exp))) {
