@@ -370,13 +370,13 @@ typedef struct {
         DWORD researchTech;
         DWORD no_idea_4[35];
         DWORD nUnits; // number of units owned by this civ
-        DWORD no_idea_4[5];
+        DWORD no_idea_5[5];
         DWORD luxury;
         DWORD science;
         DWORD tax;
-        DWORD no_idea_5[832];
+        DWORD no_idea_6[832];
         DWORD contacts[32];
-        DWORD no_idea_6[1135];
+        DWORD no_idea_7[1135];
 } Leader;
 
 extern BOOL ReadC3CMemory(DWORD lpAddress, void* buf, int len);
