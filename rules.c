@@ -183,6 +183,16 @@ int main(int argc, char** argv) {
                 printf("Worker job #%02d: %s\n", i, workerRules[i].name);
         }
 
+        // there are always 5 world sizes
+        WorldSizeRule wsizRules[5];
+        if (!ReadC3CMemory(bic.worldSizesPtr, wsizRules, sizeof(wsizRules))) {
+                return 1;
+        }
+        for (i = 0; i < 5; ++i) {
+                printf("World size #%d: %s (%dx%d)\n", i, wsizRules[i].name,
+                       wsizRules[i].width, wsizRules[i].height);
+        }
+
         DWORD nPlayers;
         // number of players appears right before address pointed by playersPtr
         if (!ReadC3CMemory(bic.playersPtr - sizeof(DWORD), &nPlayers,

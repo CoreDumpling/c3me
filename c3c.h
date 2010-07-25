@@ -474,6 +474,19 @@ typedef struct {
         char order[32];
 } WorkerRule;
 
+// World Sizes tab in rules editor
+typedef struct {
+        DWORD no_idea_1; // zero?
+        DWORD ocn; // optimal city number
+        DWORD techRate;
+        DWORD no_idea_2[6]; // zero?
+        char name[32];
+        DWORD height;
+        DWORD distanceBetweenCivs;
+        DWORD numCivs;
+        DWORD width;
+} WorldSizeRule;
+
 // Player data from scenario properties
 typedef struct {
         DWORD customCivData;
