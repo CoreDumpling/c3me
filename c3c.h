@@ -368,7 +368,9 @@ typedef struct {
         DWORD no_idea_3[50];
         DWORD beakers;
         DWORD researchTech;
-        DWORD no_idea_4[41];
+        DWORD no_idea_4[35];
+        DWORD nUnits; // number of units owned by this civ
+        DWORD no_idea_4[5];
         DWORD luxury;
         DWORD science;
         DWORD tax;
