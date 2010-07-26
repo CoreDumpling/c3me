@@ -269,6 +269,7 @@ typedef struct {
         DWORD no_idea_2; // one?
 } EraRule;
 
+// Flavors tab in rules editor
 typedef struct {
         DWORD no_idea_1; // one?
         char name[256];
