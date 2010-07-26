@@ -118,7 +118,7 @@ int dump_bic() {
         PRINT_DWORD(bic, terrainPtr, "0x%08x");
         PRINT_DWORD(bic, no_idea_22_ptr, "0x%08x");
         PRINT_DWORD(bic, worldSizesPtr, "0x%08x");
-        PRINT_DWORD(bic, no_idea_23_ptr, "0x%08x");
+        PRINT_DWORD(bic, flavorsPtrPtr, "0x%08x");
         PRINT_DWORD(bic, screenWidthPixels, "%d");
         PRINT_DWORD(bic, screenHeightPixels, "%d");
         PRINT_DWORD(bic, no_idea_24, "0x%08x");

@@ -125,7 +125,7 @@ typedef struct {
         DWORD terrainPtr;
         DWORD no_idea_22_ptr;
         DWORD worldSizesPtr;
-        DWORD no_idea_23_ptr;
+        DWORD flavorsPtrPtr; // actual flavorPtr is at flavorsPtrPtr + 0x10
         DWORD screenWidthPixels;
         DWORD screenHeightPixels;
         DWORD no_idea_24;
@@ -268,6 +268,16 @@ typedef struct {
         DWORD nResearchers;
         DWORD no_idea_2; // one?
 } EraRule;
+
+typedef struct {
+        DWORD no_idea_1; // one?
+        char name[256];
+        DWORD numFlavors; // always 7?
+        DWORD no_idea_2; // one?
+        DWORD relationsPtr; // pointer to 7 ints, one for each flavor
+        DWORD no_idea_3; // pointer?
+        DWORD no_idea_4; // same pointer repeated?
+} FlavorRule;
 
 // Governments tab in rules editor
 typedef struct {

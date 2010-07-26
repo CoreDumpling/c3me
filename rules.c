@@ -104,6 +104,21 @@ int main(int argc, char** argv) {
                 printf("Era: %s\n", eraRules[i].name);
         }
 
+        // there seem to be 7 flavors, always
+        FlavorRule flavorRules[7];
+        DWORD flavorPtr;
+        // actual flavor ptr is stored at flavorsPtrPtr + 0x10
+        if (!ReadC3CMemory(bic.flavorsPtrPtr + 0x10, &flavorPtr,
+                           sizeof(DWORD))) {
+                return 1;
+        }
+        if (!ReadC3CMemory(flavorPtr, &flavorRules, sizeof(flavorRules))) {
+                return 1;
+        }
+        for (i = 0; i < 7; ++i) {
+                printf("Flavor: %s\n", flavorRules[i].name);
+        }
+
         DWORD nGovts;
         // number of govts appears right before address pointed by govtsPtr
         if (!ReadC3CMemory(bic.govtsPtr - sizeof(DWORD), &nGovts,
