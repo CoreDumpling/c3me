@@ -1,13 +1,16 @@
+CFLAGS = -mno-cygwin
+CC = gcc $(CFLAGS)
+
 all: rules.exe datadump.exe
 
 c3c.o: c3c.c c3c.h
-	gcc -c c3c.c -o $@
+	$(CC) -c c3c.c -o $@
 
 rules.exe: rules.c c3c.o
-	gcc $^ -o $@
+	$(CC) $^ -o $@
 
 datadump.exe: datadump.c c3c.o
-	gcc $^ -o $@
+	$(CC) $^ -o $@
 
 clean:
 	rm -f *.exe *.o *.stackdump
