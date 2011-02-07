@@ -16,7 +16,7 @@
         } while (0);
 #define PRINT_DWORD_BUF(data, field, fmt) \
         do { \
-                int len = sizeof(data.field) / sizeof(DWORD); \
+                int len = sizeof(data.field) / sizeof(uint32_t); \
                 int i; \
                 for (i = 0; i < len; ++i) { \
                         printf(#data "+%04x (" #field "[%d]): " fmt "\n", \
@@ -128,7 +128,7 @@ int dump_bic()
 
 int dump_lead(int leadId)
 {
-	DWORD leadPtr;
+	uint32_t leadPtr;
 	Leader lead;
 	if (!ReadC3CMemory(LEADERS_BEGIN_ADDR + leadId * sizeof(Leader),
 			   &lead, sizeof(Leader))) {
@@ -162,23 +162,23 @@ int dump_lead(int leadId)
 
 int dump_unit(int unitId)
 {
-	DWORD unitsPtr;
-	DWORD unitValid, unitValidPtr;
-	DWORD unitPtr, unitPtrPtr;
-	if (!ReadC3CMemory(UNITS_BEGIN_ADDR, &unitsPtr, sizeof(DWORD))) {
+	uint32_t unitsPtr;
+	uint32_t unitValid, unitValidPtr;
+	uint32_t unitPtr, unitPtrPtr;
+	if (!ReadC3CMemory(UNITS_BEGIN_ADDR, &unitsPtr, sizeof(uint32_t))) {
 		return 1;
 	}
-	unitValidPtr = unitsPtr + unitId * 2 * sizeof(DWORD);
-	if (!ReadC3CMemory(unitValidPtr, &unitValid, sizeof(DWORD))) {
+	unitValidPtr = unitsPtr + unitId * 2 * sizeof(uint32_t);
+	if (!ReadC3CMemory(unitValidPtr, &unitValid, sizeof(uint32_t))) {
 		return 1;
 	}
-	unitPtrPtr = unitValidPtr + sizeof(DWORD);
+	unitPtrPtr = unitValidPtr + sizeof(uint32_t);
 	if (unitValid != 0xffffffff) {
 		fprintf(stderr, "Invalid unit id: %d\n", unitId);
 		return 1;
 	} else {
 		Unit unit;
-		if (!ReadC3CMemory(unitPtrPtr, &unitPtr, sizeof(DWORD))) {
+		if (!ReadC3CMemory(unitPtrPtr, &unitPtr, sizeof(uint32_t))) {
 			return 1;
 		}
 		if (!unitPtr) {

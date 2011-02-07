@@ -1,7 +1,8 @@
 #include "c3c.h"
 #include <stdio.h>
+#include <windows.h>
 
-BOOL ReadC3CMemory(DWORD lpAddress, void *buf, int len)
+int ReadC3CMemory(uint32_t lpAddress, void *buf, int len)
 {
 	HWND hwnd = FindWindow(NULL, C3C_WINDOW_TITLE);
 	if (hwnd) {
@@ -17,7 +18,7 @@ BOOL ReadC3CMemory(DWORD lpAddress, void *buf, int len)
 	}
 }
 
-BOOL WriteC3CMemory(DWORD lpAddress, void *buf, int len)
+int WriteC3CMemory(uint32_t lpAddress, void *buf, int len)
 {
 	HWND hwnd = FindWindow(NULL, C3C_WINDOW_TITLE);
 	if (hwnd) {
