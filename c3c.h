@@ -7,6 +7,8 @@
 /* Memory addresses -- be careful with these! */
 #define BIC_ADDR                0x009C34D0
 #define NUM_UNITS_ADDR          0x00A5264C
+#define PLAYER_MASK_ADDR        0x00A5267C
+#define MP_FLAG_ADDR            0x00A52951
 #define UNITS_BEGIN_ADDR        0x00A52E44
 #define CITIES_BEGIN_ADDR       0x00A52E2C
 #define LEADERS_BEGIN_ADDR      0x00A52E60
