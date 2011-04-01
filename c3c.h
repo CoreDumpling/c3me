@@ -69,7 +69,7 @@ typedef struct {
 	uint32_t baseTimeUnit;	// 0 = years, 1 = months, 2 = weeks
 	uint32_t startMonth;	// 1-12
 	uint32_t startWeek;	// 1-52
-	uint32_t startYear;	// negative if BC
+	int32_t startYear;	// negative if BC
 	uint32_t timeLimitMinutes;
 	uint32_t timeLimitTurns;
 	uint32_t timeScaleTurns[7];
@@ -453,7 +453,7 @@ typedef struct {
 	uint32_t airMissions;
 	uint32_t unitClass;
 	uint32_t otherStrategy;
-	uint32_t hpBonus;
+	int32_t hpBonus;
 	uint32_t standardOrdersPTW;
 	uint32_t specialActionsPTW[2];
 	uint32_t airMissionsPTW;
@@ -590,8 +590,8 @@ typedef struct {
 	uint32_t no_idea_2[2];
 	uint32_t capitalCityId;
 	uint32_t no_idea_3[5];
-	uint32_t posGold;	// total gold is posGold + negGold
-	uint32_t negGold;	// negGold is a negative number
+	int32_t posGold;	// total gold is posGold + negGold
+	int32_t negGold;	// negGold is a negative number
 	uint32_t no_idea_4[21];
 	uint32_t govt;
 	uint32_t no_idea_5[21];
