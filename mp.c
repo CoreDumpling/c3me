@@ -1,10 +1,14 @@
 #include "c3c.h"
+#include <stdio.h>
 
 int main(int argc, char** argv) {
         uint32_t mask = 0; // the bitmask for which players are human-controlled
         char flag = 1; // the flag for whether or not multiplayer is enabled
 
-        if (!WriteC3CMemory(MP_FLAG_ADDR, &flag, sizeof(char))) return 1;
+        if (!WriteC3CMemory(MP_FLAG_ADDR, &flag, sizeof(char))) {
+		fprintf(stderr, "Unable to activate multiplayer mode.\n");
+		return 1;
+	}
 
         mask = 0;
 	int a;
