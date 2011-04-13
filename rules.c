@@ -25,7 +25,7 @@ int main(int argc, char **argv)
     }
 
     uint32_t nRaces;
-    // number of races appears right before address pointed by racesPtr
+    /* number of races appears right before address pointed by racesPtr */
     if (!ReadC3CMemory(bic.racesPtr - sizeof(uint32_t), &nRaces,
 		       sizeof(uint32_t))) {
 	return 1;
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 	printf("Tech %d: %s\n", i, techRules[i].name);
     }
 
-    // there are always 4 combat experience levels
+    /* there are always 4 combat experience levels */
     ExpRule expRule[4];
     if (!ReadC3CMemory(bic.experiencePtr, &expRule, sizeof(expRule))) {
 	return 1;
@@ -86,7 +86,7 @@ int main(int argc, char **argv)
 	       difficultyRules[i].name, difficultyRules[i].costFactor);
     }
 
-    // there are always 9 diplomatic / espionage missions
+    /* there are always 9 diplomatic / espionage missions */
     SpyRule spyRules[9];
     if (!ReadC3CMemory(bic.espionagePtr, spyRules, sizeof(spyRules))) {
 	return 1;
@@ -95,7 +95,7 @@ int main(int argc, char **argv)
 	printf("Diplomatic/Espionage mission: %s\n", spyRules[i].name);
     }
 
-    // there are always 4 eras
+    /* there are always 4 eras */
     EraRule eraRules[4];
     if (!ReadC3CMemory(bic.erasPtr, eraRules, sizeof(eraRules))) {
 	return 1;
@@ -104,10 +104,10 @@ int main(int argc, char **argv)
 	printf("Era: %s\n", eraRules[i].name);
     }
 
-    // there seem to be 7 flavors, always
+    /* there seem to be 7 flavors, always */
     FlavorRule flavorRules[7];
     uint32_t flavorPtr;
-    // actual flavor ptr is stored at flavorsPtrPtr + 0x10
+    /* actual flavor ptr is stored at flavorsPtrPtr + 0x10 */
     if (!ReadC3CMemory
 	(bic.flavorsPtrPtr + 0x10, &flavorPtr, sizeof(uint32_t))) {
 	return 1;
@@ -120,7 +120,7 @@ int main(int argc, char **argv)
     }
 
     uint32_t nGovts;
-    // number of govts appears right before address pointed by govtsPtr
+    /* number of govts appears right before address pointed by govtsPtr */
     if (!ReadC3CMemory(bic.govtsPtr - sizeof(uint32_t), &nGovts,
 		       sizeof(uint32_t))) {
 	return 1;
@@ -156,7 +156,7 @@ int main(int argc, char **argv)
 	printf("%s: %s\n", resRules[i].name, resRules[i].pedia);
     }
 
-    // there are always 14 terrain types
+    /* there are always 14 terrain types */
     TerrainRule terrainRules[14];
     if (!ReadC3CMemory(bic.terrainPtr, terrainRules, sizeof(terrainRules))) {
 	return 1;
@@ -168,7 +168,7 @@ int main(int argc, char **argv)
     }
 
     uint32_t nUnits;
-    // number of units appears right before address pointed by unitsPtr
+    /* number of units appears right before address pointed by unitsPtr */
     if (!ReadC3CMemory(bic.unitsPtr - sizeof(uint32_t), &nUnits,
 		       sizeof(uint32_t))) {
 	return 1;
@@ -185,7 +185,7 @@ int main(int argc, char **argv)
 	       unitRules[i].movement, unitRules[i].shieldCost);
     }
 
-    // there are always 13 worker jobs
+    /* there are always 13 worker jobs */
     WorkerRule workerRules[13];
     if (!ReadC3CMemory
 	(bic.workerJobsPtr, workerRules, sizeof(workerRules))) {
@@ -195,7 +195,7 @@ int main(int argc, char **argv)
 	printf("Worker job #%02d: %s\n", i, workerRules[i].name);
     }
 
-    // there are always 5 world sizes
+    /* there are always 5 world sizes */
     WorldSizeRule wsizRules[5];
     if (!ReadC3CMemory(bic.worldSizesPtr, wsizRules, sizeof(wsizRules))) {
 	return 1;
@@ -206,7 +206,7 @@ int main(int argc, char **argv)
     }
 
     uint32_t nPlayers;
-    // number of players appears right before address pointed by playersPtr
+    /* number of players appears right before address pointed by playersPtr */
     if (!ReadC3CMemory(bic.playersPtr - sizeof(uint32_t), &nPlayers,
 		       sizeof(uint32_t))) {
 	return 1;
@@ -214,20 +214,20 @@ int main(int argc, char **argv)
     printf("Number of players: %d\n", nPlayers);
     PlayerData *playerData =
 	(PlayerData *) malloc(nPlayers * sizeof(PlayerData));
-    // no idea what the first 4 bytes are, but they don't match a player
+    /* no idea what the first 4 bytes are, but they don't match a player */
     if (!ReadC3CMemory(bic.playersPtr + sizeof(uint32_t), playerData,
 		       nPlayers * sizeof(PlayerData))) {
 	return 1;
     }
     for (i = 0; i < nPlayers; ++i) {
-	// the index i starts at zero, but counts from "Player 1"
+	/* the index i starts at zero, but counts from "Player 1" */
 	printf("Player #%02d - %s (%s):\n", i + 1,
 	       raceRules[playerData[i].civId].civName,
 	       govtRules[playerData[i].government].name);
     }
 
-    // there is always a block of memory that holds 32 leaders, even though
-    // not all of them are valid (invalid ones will have -1 nationality)
+    /* There is always a block of memory that holds 32 leaders, even though not
+     * all of them are valid (invalid ones will have -1 nationality) */
     Leader leaders[32];
     if (!ReadC3CMemory(LEADERS_BEGIN_ADDR, &leaders, sizeof(leaders))) {
 	return 1;
@@ -239,9 +239,9 @@ int main(int argc, char **argv)
 	       raceRules[leaders[i].nationality].civName);
     }
 
-    // in-game units are stored as an array of pointers to the unit data,
-    // with an integer before each pointer indicating if it is valid
-    // total number of units in-game stored at NUM_UNITS_ADDR
+    /* In-game units are stored as an array of pointers to the unit data,
+     * with an integer before each pointer indicating if it is valid total
+     * number of units in-game stored at NUM_UNITS_ADDR */
     uint32_t unitsPtr;
     uint32_t unitValid;
     uint32_t unitPtr;
@@ -263,7 +263,7 @@ int main(int argc, char **argv)
 	if (!unitPtr) {
 	    continue;
 	}
-	// if we get this far, it's a valid unit in-game
+	/* if we get this far, it's a valid unit in-game */
 	Unit unit;
 	ReadC3CMemory(unitPtr, &unit, sizeof(Unit));
 	printf("Unit #%04d - %s, %s (%d,%d):\n",
@@ -296,7 +296,7 @@ int main(int argc, char **argv)
 	       city.id, city.name, city.x, city.y, city.population);
 	citiesPtr += sizeof(uint32_t);
 
-	// read citizen data
+	/* read citizen data */
 	uint32_t citizensPtr = city.citizenPtr;
 	uint32_t citizenValid;
 	uint32_t citizenPtr;

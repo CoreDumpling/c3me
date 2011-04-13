@@ -1,4 +1,4 @@
-// Utility to dump contents of data structures
+/* Utility to dump contents of data structures */
 
 #include "c3c.h"
 #include <stdio.h>
