@@ -226,12 +226,14 @@ int main(int argc, char **argv)
 	}
 
 	// there is always a block of memory that holds 32 leaders, even though
-	// not all of them are valid -- we have nPlayers + 1 for barbarians
+	// not all of them are valid (invalid ones will have -1 nationality)
 	Leader leaders[32];
 	if (!ReadC3CMemory(LEADERS_BEGIN_ADDR, &leaders, sizeof(leaders))) {
 		return 1;
 	}
-	for (i = 0; i <= nPlayers; ++i) {
+	for (i = 0; i < 32; ++i) {
+		if (leaders[i].nationality == -1)
+			break;
 		printf("Leader #%02d - %s\n", i,
 		       raceRules[leaders[i].nationality].civName);
 	}
