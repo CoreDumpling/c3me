@@ -13,7 +13,6 @@ int main(int argc, char **argv)
 	return 1;
     }
 
-    mask = 0;
     int a;
     for (a = 1; a < argc; ++a) {
 	int p = atoi(argv[a]);
