@@ -622,7 +622,9 @@ typedef struct {
     uint32_t no_idea_10[2];	/* singular/plural? gender? */
     /* LEAD+0x11AC */
     uint32_t no_idea_11[4];	/* non-zero values */
-    uint32_t no_idea_12[970];
+    uint32_t no_idea_12[16];	/* zeros? */
+    char password[256];		/* size of 256 is just a guess, may be wrong */
+    uint32_t no_idea_13[890];
 } Leader;
 
 extern int ReadC3CMemory(uint32_t lpAddress, void *buf, int len);
