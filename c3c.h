@@ -585,6 +585,7 @@ typedef struct {
 
 /* In-game player ("leader") information */
 typedef struct {
+    /* LEAD+0x0000 */
     char LEAD[4];		/* "LEAD" */
     uint32_t no_idea_1[4];
     uint32_t id;
@@ -595,19 +596,33 @@ typedef struct {
     int32_t posGold;		/* total gold is posGold + negGold */
     int32_t negGold;		/* negGold is a negative number */
     uint32_t no_idea_4[21];
+    /* LEAD+0x0098 */
     uint32_t govt;
     uint32_t no_idea_5[21];
     uint32_t beakers;
     uint32_t researchTech;
     uint32_t no_idea_6[35];
+    /* LEAD+0x0184 */
     uint32_t nUnits;		/* number of units owned by this civ */
     uint32_t no_idea_7[5];
-    uint32_t luxury;
-    uint32_t science;
-    uint32_t tax;
+    uint32_t luxury;		/* scale of 0-10 */
+    uint32_t science;		/* scale of 0-10 */
+    uint32_t tax;		/* scale of 0-10 */
     uint32_t no_idea_8[832];
-    uint32_t contacts[32];
-    uint32_t no_idea_9[1135];
+    /* LEAD+0x0EA8 */
+    uint32_t contacts[32];	/* 1 or 0 for contact with each other leader */
+    uint32_t no_idea_9[114];
+    /* LEAD+0x10F0 */
+    uint32_t color;		/* in-game color, not derived from rules */
+    char leaderName[32];	/* user-input name */
+    char leaderTitle[24];	/* user-input title */
+    char civName[40];		/* user-input civ name */
+    char noun[40];		/* user-input civ, collective noun */
+    char adjective[40];		/* user-input civ, adjective */
+    uint32_t no_idea_10[2];	/* singular/plural? gender? */
+    /* LEAD+0x11AC */
+    uint32_t no_idea_11[4];	/* non-zero values */
+    uint32_t no_idea_12[970];
 } Leader;
 
 extern int ReadC3CMemory(uint32_t lpAddress, void *buf, int len);
