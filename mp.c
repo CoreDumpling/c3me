@@ -85,7 +85,7 @@ int main(int argc, char **argv)
 		char c = 0;
 		n = scanf(" %c", &c);
 		if (c == '*') {
-		    mask = 0xfffffff;
+		    mask = 0xffffffff;
 		} else if (c == '=') {
 		    mask = 0;
 		} else if (c == '!') {
