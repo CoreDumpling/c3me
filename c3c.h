@@ -2,7 +2,8 @@
 
 /* This is the title for the English edition of C3C
  * You may need to change it for other editions */
-#define C3C_WINDOW_TITLE "Sid Meier's Civilization III: Conquests"
+#define CONQUESTS_WINDOW_TITLE "Sid Meier's Civilization III: Conquests"
+#define COMPLETE_WINDOW_TITLE "Sid Meier's Civilization III: Complete"
 
 /* Memory addresses -- be careful with these! */
 #define BIC_ADDR                0x009C34D0

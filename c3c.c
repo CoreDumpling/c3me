@@ -4,7 +4,10 @@
 
 int ReadC3CMemory(uint32_t lpAddress, void *buf, int len)
 {
-    HWND hwnd = FindWindow(NULL, C3C_WINDOW_TITLE);
+    HWND hwnd = FindWindow(NULL, CONQUESTS_WINDOW_TITLE);
+    if (!hwnd) {
+	hwnd = FindWindow(NULL, COMPLETE_WINDOW_TITLE);
+    }
     if (hwnd) {
 	DWORD pid;
 	GetWindowThreadProcessId(hwnd, &pid);
@@ -20,7 +23,10 @@ int ReadC3CMemory(uint32_t lpAddress, void *buf, int len)
 
 int WriteC3CMemory(uint32_t lpAddress, void *buf, int len)
 {
-    HWND hwnd = FindWindow(NULL, C3C_WINDOW_TITLE);
+    HWND hwnd = FindWindow(NULL, CONQUESTS_WINDOW_TITLE);
+    if (!hwnd) {
+	hwnd = FindWindow(NULL, COMPLETE_WINDOW_TITLE);
+    }
     if (hwnd) {
 	DWORD pid;
 	GetWindowThreadProcessId(hwnd, &pid);
