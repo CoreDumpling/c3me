@@ -10,6 +10,7 @@ extern uint32_t ADDR_OFFSET;	/* address offset of Complete vs. Conquests */
 #define BIC_ADDR                (0x009C34D0 + ADDR_OFFSET)
 #define NUM_UNITS_ADDR          (0x00A5264C + ADDR_OFFSET)
 #define PLAYER_MASK_ADDR        (0x00A5267C + ADDR_OFFSET)
+#define PBEM_FLAG_ADDR          (0x00A52774 + ADDR_OFFSET)
 #define MP_FLAG_ADDR            (0x00A52951 + ADDR_OFFSET)
 #define UNITS_BEGIN_ADDR        (0x00A52E44 + ADDR_OFFSET)
 #define CITIES_BEGIN_ADDR       (0x00A52E2C + ADDR_OFFSET)

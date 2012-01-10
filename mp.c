@@ -11,7 +11,8 @@ int main(int argc, char **argv)
     if (!FindC3C()) {
 	return 1;
     }
-    if (!WriteC3CMemory(MP_FLAG_ADDR, &flag, sizeof(char))) {
+    if (!WriteC3CMemory(MP_FLAG_ADDR, &flag, sizeof(char)) ||
+	!WriteC3CMemory(PBEM_FLAG_ADDR, &flag, sizeof(char))) {
 	fprintf(stderr, "Unable to activate multiplayer mode.\n");
 	return 1;
     }
