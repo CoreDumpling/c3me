@@ -2,9 +2,30 @@
 #include <stdio.h>
 #include <windows.h>
 
+/* Handle to C3C window */
+HWND hwnd = 0;
+
+/* Address offset of Complete vs. Conquests */
+uint32_t ADDR_OFFSET = 0;
+const uint32_t COMPLETE_ADDR_OFFSET = 0x40;
+
+int FindC3C()
+{
+    hwnd = FindWindow(NULL, CONQUESTS_WINDOW_TITLE);
+    if (hwnd) {
+	ADDR_OFFSET = 0;
+	return TRUE;
+    } else if (hwnd = FindWindow(NULL, COMPLETE_WINDOW_TITLE)) {
+	ADDR_OFFSET = COMPLETE_ADDR_OFFSET;
+	return TRUE;
+    } else {
+	fprintf(stderr, "C3C process not found\n");
+	return FALSE;
+    }
+}
+
 int ReadC3CMemory(uint32_t lpAddress, void *buf, int len)
 {
-    HWND hwnd = FindWindow(NULL, C3C_WINDOW_TITLE);
     if (hwnd) {
 	DWORD pid;
 	GetWindowThreadProcessId(hwnd, &pid);
@@ -13,14 +34,12 @@ int ReadC3CMemory(uint32_t lpAddress, void *buf, int len)
 	CloseHandle(hProc);
 	return TRUE;
     } else {
-	fprintf(stderr, "C3C process not found\n");
 	return FALSE;
     }
 }
 
 int WriteC3CMemory(uint32_t lpAddress, void *buf, int len)
 {
-    HWND hwnd = FindWindow(NULL, C3C_WINDOW_TITLE);
     if (hwnd) {
 	DWORD pid;
 	GetWindowThreadProcessId(hwnd, &pid);
@@ -35,7 +54,6 @@ int WriteC3CMemory(uint32_t lpAddress, void *buf, int len)
 	    return FALSE;
 	}
     } else {
-	fprintf(stderr, "C3C process not found\n");
 	return FALSE;
     }
 }
