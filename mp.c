@@ -8,6 +8,9 @@ int main(int argc, char **argv)
     /* flag for whether or not multiplayer is enabled */
     char flag = 1;
 
+    if (!FindC3C()) {
+	return 1;
+    }
     if (!WriteC3CMemory(MP_FLAG_ADDR, &flag, sizeof(char))) {
 	fprintf(stderr, "Unable to activate multiplayer mode.\n");
 	return 1;
