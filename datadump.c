@@ -170,6 +170,17 @@ int dump_lead(int leadId)
     PRINT_FIELD_BUF(lead, no_idea_8, "%p");
     PRINT_FIELD_BUF(lead, contacts, "%d");
     PRINT_FIELD_BUF(lead, no_idea_9, "%p");
+    PRINT_FIELD(lead, color, "%d");
+    PRINT_FIELD(lead, leaderName, "%s");
+    PRINT_FIELD(lead, leaderTitle, "%s");
+    PRINT_FIELD(lead, civName, "%s");
+    PRINT_FIELD(lead, noun, "%s");
+    PRINT_FIELD(lead, adjective, "%s");
+    PRINT_FIELD_BUF(lead, no_idea_10, "%p");
+    PRINT_FIELD_BUF(lead, no_idea_11, "%p");
+    PRINT_FIELD_BUF(lead, no_idea_12, "%p");
+    PRINT_FIELD(lead, password, "%s");
+    PRINT_FIELD_BUF(lead, no_idea_13, "%p");
     return 0;
 }
 
