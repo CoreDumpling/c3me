@@ -2,14 +2,16 @@
 
 /* This is the title for the English edition of C3C
  * You may need to change it for other editions */
-#define C3C_WINDOW_TITLE "Sid Meier's Civilization III: Conquests"
+#define CONQUESTS_WINDOW_TITLE "Sid Meier's Civilization III: Conquests"
+#define COMPLETE_WINDOW_TITLE "Sid Meier's Civilization III: Complete"
 
 /* Memory addresses -- be careful with these! */
-#define BIC_ADDR                0x009C34D0
-#define NUM_UNITS_ADDR          0x00A5264C
-#define UNITS_BEGIN_ADDR        0x00A52E44
-#define CITIES_BEGIN_ADDR       0x00A52E2C
-#define LEADERS_BEGIN_ADDR      0x00A52E60
+extern uint32_t ADDR_OFFSET;	/* address offset of Complete vs. Conquests */
+#define BIC_ADDR                (0x009C34D0 + ADDR_OFFSET)
+#define NUM_UNITS_ADDR          (0x00A5264C + ADDR_OFFSET)
+#define UNITS_BEGIN_ADDR        (0x00A52E44 + ADDR_OFFSET)
+#define CITIES_BEGIN_ADDR       (0x00A52E2C + ADDR_OFFSET)
+#define LEADERS_BEGIN_ADDR      (0x00A52E60 + ADDR_OFFSET)
 
 typedef struct {
     /* BIC+0x0000 */

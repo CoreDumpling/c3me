@@ -5,6 +5,9 @@ int main(int argc, char **argv)
     Bic bic;
     int i;
 
+    if (!FindC3C()) {
+	return 1;
+    }
     if (!ReadC3CMemory(BIC_ADDR, &bic, sizeof(Bic))) {
 	return 1;
     }
