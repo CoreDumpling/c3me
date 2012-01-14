@@ -14,12 +14,41 @@ int FindC3C()
     hwnd = FindWindow(NULL, CONQUESTS_WINDOW_TITLE);
     if (hwnd) {
 	ADDR_OFFSET = 0;
-	return TRUE;
     } else if (hwnd = FindWindow(NULL, COMPLETE_WINDOW_TITLE)) {
 	ADDR_OFFSET = COMPLETE_ADDR_OFFSET;
-	return TRUE;
     } else {
 	fprintf(stderr, "C3C process not found\n");
+	return FALSE;
+    }
+
+    /* Some versions of C3C have the memory addresses offset differently.
+     * To try to handle this, check to see if the BIC header is present at the
+     * expected location, and if not, scan the nearby memory addresses in an
+     * attempt to find it. */
+    char BIC[4];
+    if (ReadC3CMemory(BIC_ADDR, BIC, 4)) {
+	if (!strncmp("BIC ", BIC, 4)) {
+	    /* BIC header found at expected location */
+	    return TRUE;
+	} else {
+	    uint32_t scan;
+	    for (scan = BIC_ADDR - 0x10000; scan < BIC_ADDR + 0x10000;
+		 scan += 4) {
+		if (!ReadC3CMemory(scan, BIC, 4)) {
+		    fprintf(stderr, "Unable to read BIC header\n");
+		    return FALSE;
+		}
+		if (!strncmp("BIC ", BIC, 4)) {
+		    /* BIC header found elsewhere, recompute memory offset */
+		    ADDR_OFFSET = scan - (BIC_ADDR - ADDR_OFFSET);
+		    return TRUE;
+		}
+	    }
+	    fprintf(stderr, "Unable to locate BIC header\n");
+	    return FALSE;
+	}
+    } else {
+	fprintf(stderr, "Unable to read BIC header\n");
 	return FALSE;
     }
 }
