@@ -27,4 +27,4 @@ clean:
 	rm -f *.exe *.o *.stackdump
 	cd gui && $(MAKE) clean
 
-.PHONY: clean
+.PHONY: all clean

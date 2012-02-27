@@ -19,3 +19,5 @@ clean:
 	mingw32-make -f Makefile.qt clean
 	rm -rf debug release
 	rm Makefile.qt*
+
+.PHONY: all clean
