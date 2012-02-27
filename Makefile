@@ -1,9 +1,8 @@
 CYGDRIVE := $(shell if uname | grep -iq cygwin; then echo '/cygdrive'; fi)
 
-QT_DIR := $(CYGDRIVE)/c/Qt/4.8.0
 MINGW_DIR := $(CYGDRIVE)/c/MinGW
 
-PATH := ${QT_DIR}/bin:${MINGW_DIR}/bin:${PATH}
+PATH := $(MINGW_DIR)/bin:$(PATH)
 
 CFLAGS =
 CC = gcc $(CFLAGS)

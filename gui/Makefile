@@ -6,7 +6,7 @@ MINGW_DIR := $(CYGDRIVE)/c/MinGW
 QT_LIBS = mingwm10.dll QtCore4.dll QtGui4.dll
 MINGW_LIBS = libgcc_s_dw2-1.dll
 
-PATH := ${QT_DIR}/bin:${MINGW_DIR}/bin:${PATH}
+PATH := $(QT_DIR)/bin:$(MINGW_DIR)/bin:$(PATH)
 
 all:
 	qmake -o Makefile.qt
