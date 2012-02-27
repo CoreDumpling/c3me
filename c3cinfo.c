@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "c3c.h"
 
 int main(int argc, char **argv)
