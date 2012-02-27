@@ -635,6 +635,7 @@ typedef struct {
     uint32_t no_idea_13[890];
 } Leader;
 
+extern int FindC3C();
 extern int ReadC3CMemory(uint32_t lpAddress, void *buf, int len);
 extern int WriteC3CMemory(uint32_t lpAddress, void *buf, int len);
 
