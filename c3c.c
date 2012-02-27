@@ -32,8 +32,8 @@ int FindC3C()
 	    return TRUE;
 	} else {
 	    uint32_t scan;
-	    for (scan = BIC_ADDR - 0x10000; scan < BIC_ADDR + 0x10000;
-		 scan += 4) {
+	    for (scan = BIC_ADDR + 4; scan < BIC_ADDR + 0x10000;
+		 scan += (BIC_ADDR - scan) * 2 + (scan < BIC_ADDR ? 4 : 0)) {
 		if (!ReadC3CMemory(scan, BIC, 4)) {
 		    fprintf(stderr, "Unable to read BIC header\n");
 		    return FALSE;

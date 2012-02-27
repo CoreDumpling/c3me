@@ -1,5 +1,9 @@
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* This is the title for the English edition of C3C
  * You may need to change it for other editions */
 #define CONQUESTS_WINDOW_TITLE "Sid Meier's Civilization III: Conquests"
@@ -633,3 +637,7 @@ typedef struct {
 
 extern int ReadC3CMemory(uint32_t lpAddress, void *buf, int len);
 extern int WriteC3CMemory(uint32_t lpAddress, void *buf, int len);
+
+#ifdef __cplusplus
+}
+#endif
