@@ -1,3 +1,6 @@
+#ifndef C3C_H
+#define C3C_H
+
 #include <stdint.h>
 
 #ifdef __cplusplus
@@ -641,4 +644,6 @@ extern int WriteC3CMemory(uint32_t lpAddress, void *buf, int len);
 
 #ifdef __cplusplus
 }
+#endif
+
 #endif

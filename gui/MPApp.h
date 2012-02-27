@@ -1,5 +1,5 @@
-#ifndef __MP_APP_H
-#define __MP_APP_H
+#ifndef MPAPP_H
+#define MPAPP_H
 
 #include "c3c.h"
 #include <QApplication>
