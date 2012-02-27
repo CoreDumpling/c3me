@@ -9,20 +9,26 @@
 
 class MPApp : public QApplication {
     Q_OBJECT
+
     private:
-	QWidget widget;
-	QGridLayout layout;
+	// bitmask for which players are human-controlled
 	uint32_t mask;
+	// flag for whether or not multiplayer is enabled
 	char flag;
 	Bic bic;
 	uint32_t nRaces;
 	RaceRule *raceRules;
 	Leader leaders[32];
-	QCheckBox boxes[32];
+
+	// UI elements
+	QWidget widget;
+	QGridLayout layout;
+	QCheckBox boxes[32]; // one per leader, not all will be used
 
     public:
 	MPApp(int argc, char *argv[]);
 	~MPApp();
+
     public slots:
 	void update();
 };
