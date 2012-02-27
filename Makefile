@@ -1,5 +1,7 @@
-QT_DIR := /cygdrive/c/Qt/4.8.0
-MINGW_DIR := /cygdrive/c/MinGW
+CYGDRIVE := $(shell if uname | grep -iq cygwin; then echo '/cygdrive'; fi)
+
+QT_DIR := $(CYGDRIVE)/c/Qt/4.8.0
+MINGW_DIR := $(CYGDRIVE)/c/MinGW
 
 PATH := ${QT_DIR}/bin:${MINGW_DIR}/bin:${PATH}
 
@@ -7,7 +9,8 @@ CFLAGS =
 CC = gcc $(CFLAGS)
 
 all: c3cinfo.exe datadump.exe mp.exe
-	(cd gui && make)
+	echo $(CYGDRIVE)
+	cd gui && $(MAKE)
 
 c3c.o: c3c.c c3c.h
 	$(CC) -c c3c.c -o $@
@@ -23,6 +26,6 @@ mp.exe: mp.c c3c.o
 
 clean:
 	rm -f *.exe *.o *.stackdump
-	(cd gui && make clean)
+	cd gui && $(MAKE) clean
 
 .PHONY: clean

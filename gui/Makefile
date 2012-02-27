@@ -1,5 +1,7 @@
-QT_DIR := /cygdrive/c/Qt/4.8.0
-MINGW_DIR := /cygdrive/c/MinGW
+CYGDRIVE := $(shell if uname | grep -iq cygwin; then echo '/cygdrive'; fi)
+
+QT_DIR := $(CYGDRIVE)/c/Qt/4.8.0
+MINGW_DIR := $(CYGDRIVE)/c/MinGW
 
 QT_LIBS = mingwm10.dll QtCore4.dll QtGui4.dll
 MINGW_LIBS = libgcc_s_dw2-1.dll
