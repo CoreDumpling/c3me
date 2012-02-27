@@ -8,4 +8,5 @@ QMAKE_LFLAGS = -static
 LIBS += ../c3c.o
 
 # Input
-SOURCES += mp-gui.cpp
+HEADERS += MPApp.h
+SOURCES += mp-gui.cpp MPApp.cpp
