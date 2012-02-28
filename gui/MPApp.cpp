@@ -1,39 +1,50 @@
 #include "MPApp.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include <QMessageBox>
 
 MPApp::MPApp(int argc, char *argv[]) : QApplication (argc, argv) {
-    raceRules = NULL;
+    mask = 0;
     flag = 1;
+    raceRules = NULL;
+}
 
-    if (!WriteC3CMemory(MP_FLAG_ADDR, &flag, sizeof(char))) {
-	fprintf(stderr, "Unable to activate multiplayer mode.\n");
-    }
+MPApp::~MPApp() {
+    delete [] raceRules;
+}
 
+void MPApp::refresh() {
     /* First get current multiplayer settings */
+    if (!ReadC3CMemory(MP_FLAG_ADDR, &flag, sizeof(char))) {
+	QMessageBox::warning(NULL, "Operation failed",
+	    "Unable to read multiplayer settings.");
+    }
     if (!ReadC3CMemory(PLAYER_MASK_ADDR, &mask, sizeof(uint32_t))) {
-	fprintf(stderr, "Unable to verify multiplayer settings.\n");
+	QMessageBox::warning(NULL, "Operation failed",
+	    "Unable to read multiplayer settings.");
     }
 
     /* Read BIC data block */
     if (!ReadC3CMemory(BIC_ADDR, &bic, sizeof(Bic))) {
-	fprintf(stderr, "Unable to read BIC data.\n");
+	QMessageBox::warning(NULL, "Operation failed",
+	    "Unable to read BIC data.");
     }
 
     /* Read RACE data for proper names of each civ */
     if (!ReadC3CMemory(bic.racesPtr - sizeof(uint32_t), &nRaces,
 		       sizeof(uint32_t))) {
-	fprintf(stderr, "Unable to read number of civilizations.\n");
+	QMessageBox::warning(NULL, "Operation failed",
+	    "Unable to read number of civilizations.");
     }
     raceRules = new RaceRule[nRaces];
     if (!ReadC3CMemory(bic.racesPtr, raceRules, nRaces * sizeof(RaceRule))) {
-	fprintf(stderr, "Unable to read RACE data.\n");
+	QMessageBox::warning(NULL, "Operation failed",
+	    "Unable to read RACE data.");
     }
 
     /* Read LEAD data for civs in current game */
     Leader leaders[32];
     if (!ReadC3CMemory(LEADERS_BEGIN_ADDR, &leaders, sizeof(leaders))) {
-	fprintf(stderr, "Unable to read LEAD data.\n");
+	QMessageBox::warning(NULL, "Operation failed",
+	    "Unable to read LEAD data.");
     }
 
     for (int i = 0; i < 32; ++i) {
@@ -50,19 +61,21 @@ MPApp::MPApp(int argc, char *argv[]) : QApplication (argc, argv) {
     widget.show();
 }
 
-MPApp::~MPApp() {
-    delete [] raceRules;
-}
-
 void MPApp::update() {
     mask = 0;
+    flag = 1;
     for (int i = 0; i < 32; ++i) {
 	if (boxes[i].isChecked()) {
 	    mask |= 1 << i;
 	}
     }
 
+    if (!WriteC3CMemory(MP_FLAG_ADDR, &flag, sizeof(char))) {
+	QMessageBox::warning(NULL, "Operation failed",
+	    "Unable to read RACE data.");
+    }
     if (!WriteC3CMemory(PLAYER_MASK_ADDR, &mask, sizeof(uint32_t))) {
-	fprintf(stderr, "Unable to modify multiplayer settings.\n");
+	QMessageBox::warning(NULL, "Operation failed",
+	    "Unable to read RACE data.");
     }
 }

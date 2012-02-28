@@ -30,6 +30,7 @@ class MPApp : public QApplication {
 	~MPApp();
 
     public slots:
+	void refresh();
 	void update();
 };
 
