@@ -19,16 +19,19 @@ void MPApp::refresh() {
     if (!ReadC3CMemory(MP_FLAG_ADDR, &flag, sizeof(char))) {
 	QMessageBox::warning(NULL, "Operation failed",
 	    "Unable to read multiplayer settings.");
+	return;
     }
     if (!ReadC3CMemory(PLAYER_MASK_ADDR, &mask, sizeof(uint32_t))) {
 	QMessageBox::warning(NULL, "Operation failed",
 	    "Unable to read multiplayer settings.");
+	return;
     }
 
     /* Read BIC data block */
     if (!ReadC3CMemory(BIC_ADDR, &bic, sizeof(Bic))) {
 	QMessageBox::warning(NULL, "Operation failed",
 	    "Unable to read BIC data.");
+	return;
     }
 
     /* Read RACE data for proper names of each civ */
@@ -36,11 +39,13 @@ void MPApp::refresh() {
 		       sizeof(uint32_t))) {
 	QMessageBox::warning(NULL, "Operation failed",
 	    "Unable to read number of civilizations.");
+	return;
     }
     raceRules = new RaceRule[nRaces];
     if (!ReadC3CMemory(bic.racesPtr, raceRules, nRaces * sizeof(RaceRule))) {
 	QMessageBox::warning(NULL, "Operation failed",
 	    "Unable to read RACE data.");
+	return;
     }
 
     /* Read LEAD data for civs in current game */
@@ -48,6 +53,7 @@ void MPApp::refresh() {
     if (!ReadC3CMemory(LEADERS_BEGIN_ADDR, &leaders, sizeof(leaders))) {
 	QMessageBox::warning(NULL, "Operation failed",
 	    "Unable to read LEAD data.");
+	return;
     }
 
     /* Build checkbox grid */
