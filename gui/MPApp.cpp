@@ -81,10 +81,10 @@ void MPApp::update() {
 
     if (!WriteC3CMemory(MP_FLAG_ADDR, &flag, sizeof(char))) {
 	QMessageBox::warning(NULL, "Operation failed",
-	    "Unable to read RACE data.");
+	    "Unable to write multiplayer settings.");
     }
     if (!WriteC3CMemory(PLAYER_MASK_ADDR, &mask, sizeof(uint32_t))) {
 	QMessageBox::warning(NULL, "Operation failed",
-	    "Unable to read RACE data.");
+	    "Unable to write multiplayer settings.");
     }
 }
