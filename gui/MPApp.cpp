@@ -6,43 +6,34 @@ MPApp::MPApp(int argc, char *argv[]) : QApplication (argc, argv) {
     raceRules = NULL;
     flag = 1;
 
-    if (!FindC3C()) {
-	exit(1);
-    }
     if (!WriteC3CMemory(MP_FLAG_ADDR, &flag, sizeof(char))) {
 	fprintf(stderr, "Unable to activate multiplayer mode.\n");
-	exit(1);
     }
 
     /* First get current multiplayer settings */
     if (!ReadC3CMemory(PLAYER_MASK_ADDR, &mask, sizeof(uint32_t))) {
 	fprintf(stderr, "Unable to verify multiplayer settings.\n");
-	exit(1);
     }
 
     /* Read BIC data block */
     if (!ReadC3CMemory(BIC_ADDR, &bic, sizeof(Bic))) {
 	fprintf(stderr, "Unable to read BIC data.\n");
-	exit(1);
     }
 
     /* Read RACE data for proper names of each civ */
     if (!ReadC3CMemory(bic.racesPtr - sizeof(uint32_t), &nRaces,
 		       sizeof(uint32_t))) {
 	fprintf(stderr, "Unable to read number of civilizations.\n");
-	exit(1);
     }
     raceRules = new RaceRule[nRaces];
     if (!ReadC3CMemory(bic.racesPtr, raceRules, nRaces * sizeof(RaceRule))) {
 	fprintf(stderr, "Unable to read RACE data.\n");
-	exit(1);
     }
 
     /* Read LEAD data for civs in current game */
     Leader leaders[32];
     if (!ReadC3CMemory(LEADERS_BEGIN_ADDR, &leaders, sizeof(leaders))) {
 	fprintf(stderr, "Unable to read LEAD data.\n");
-	exit(1);
     }
 
     for (int i = 0; i < 32; ++i) {
