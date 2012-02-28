@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QCheckBox>
 #include <QGridLayout>
+#include <QPushButton>
 #include <QWidget>
 
 class MPApp : public QApplication {
@@ -24,6 +25,7 @@ class MPApp : public QApplication {
 	QWidget widget;
 	QGridLayout layout;
 	QCheckBox boxes[32]; // one per leader, not all will be used
+	QPushButton refreshButton;
 
     public:
 	MPApp(int argc, char *argv[]);

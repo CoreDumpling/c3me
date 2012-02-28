@@ -5,6 +5,9 @@ MPApp::MPApp(int argc, char *argv[]) : QApplication (argc, argv) {
     mask = 0;
     flag = 1;
     raceRules = NULL;
+
+    refreshButton.setText("Refresh");
+    connect(&refreshButton, SIGNAL(clicked()), this, SLOT(refresh()));
 }
 
 MPApp::~MPApp() {
@@ -47,16 +50,22 @@ void MPApp::refresh() {
 	    "Unable to read LEAD data.");
     }
 
+    /* Build checkbox grid */
+    while (layout.takeAt(0));
     for (int i = 0; i < 32; ++i) {
 	if (leaders[i].nationality == -1) {
-	     /* invalid leader -- not actually in game */
-	     break;
+	    /* invalid leader -- not actually in game */
+	    boxes[i].setChecked(false);
+	    boxes[i].hide();
+	    continue;
 	}
 	boxes[i].setText(raceRules[leaders[i].nationality].civName);
 	boxes[i].setChecked(1 << i & mask);
+	boxes[i].show();
 	connect(&boxes[i], SIGNAL(released()), this, SLOT(update()));
 	layout.addWidget(&boxes[i], i % 8, i / 8);
     }
+    layout.addWidget(&refreshButton, 8, 0);
     widget.setLayout(&layout);
     widget.show();
 }
