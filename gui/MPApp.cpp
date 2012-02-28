@@ -59,7 +59,7 @@ void MPApp::refresh() {
     /* Build checkbox grid */
     while (layout.takeAt(0));
     for (int i = 0; i < 32; ++i) {
-	if (leaders[i].nationality == -1) {
+	if (leaders[i].nationality == 0xffffffff) {
 	    /* invalid leader -- not actually in game */
 	    boxes[i].setChecked(false);
 	    boxes[i].hide();
