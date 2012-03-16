@@ -3,7 +3,8 @@
 
 MPApp::MPApp(int argc, char *argv[]) : QApplication (argc, argv) {
     mask = 0;
-    flag = 1;
+    mpFlag = 1;
+    pbemFlag = 0;
     raceRules = NULL;
 
     refreshButton.setText("Refresh");
@@ -11,6 +12,14 @@ MPApp::MPApp(int argc, char *argv[]) : QApplication (argc, argv) {
     saveChangesButton.setText("Save Changes");
     connect(&saveChangesButton, SIGNAL(clicked()), this, SLOT(saveChanges()));
 
+    hotseatButton.setText("Hotseat");
+    hotseatButton.setChecked(true);
+    pbemButton.setText("Play by e-mail");
+    buttonGroup.addButton(&hotseatButton);
+    buttonGroup.addButton(&pbemButton);
+    topButtonLayout.addWidget(&hotseatButton);
+    topButtonLayout.addWidget(&pbemButton);
+    vboxLayout.addLayout(&topButtonLayout);
     groupBox.setTitle("Select Human Civs");
     groupBox.setLayout(&gridLayout);
     vboxLayout.addWidget(&groupBox);
@@ -27,7 +36,12 @@ MPApp::~MPApp() {
 
 void MPApp::refresh() {
     /* First get current multiplayer settings */
-    if (!ReadC3CMemory(MP_FLAG_ADDR, &flag, sizeof(char))) {
+    if (!ReadC3CMemory(MP_FLAG_ADDR, &mpFlag, sizeof(char))) {
+	QMessageBox::warning(NULL, "Operation failed",
+	    "Unable to read multiplayer settings.");
+	return;
+    }
+    if (!ReadC3CMemory(PBEM_FLAG_ADDR, &pbemFlag, sizeof(char))) {
 	QMessageBox::warning(NULL, "Operation failed",
 	    "Unable to read multiplayer settings.");
 	return;
@@ -67,6 +81,10 @@ void MPApp::refresh() {
 	return;
     }
 
+    /* Update radio buttons with current multiplayer mode */
+    hotseatButton.setChecked(!pbemFlag);
+    pbemButton.setChecked(pbemFlag);
+
     /* Build checkbox grid */
     while (gridLayout.takeAt(0));
     for (int i = 0; i < 32; ++i) {
@@ -85,14 +103,19 @@ void MPApp::refresh() {
 
 void MPApp::saveChanges() {
     mask = 0;
-    flag = 1;
+    mpFlag = 1;
     for (int i = 0; i < 32; ++i) {
 	if (boxes[i].isChecked()) {
 	    mask |= 1 << i;
 	}
     }
 
-    if (!WriteC3CMemory(MP_FLAG_ADDR, &flag, sizeof(char))) {
+    if (!WriteC3CMemory(MP_FLAG_ADDR, &mpFlag, sizeof(char))) {
+	QMessageBox::warning(NULL, "Operation failed",
+	    "Unable to write multiplayer settings.");
+    }
+    pbemFlag = pbemButton.isChecked();
+    if (!WriteC3CMemory(PBEM_FLAG_ADDR, &pbemFlag, sizeof(char))) {
 	QMessageBox::warning(NULL, "Operation failed",
 	    "Unable to write multiplayer settings.");
     }

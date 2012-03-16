@@ -3,11 +3,13 @@
 
 #include "c3c.h"
 #include <QApplication>
+#include <QButtonGroup>
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QRadioButton>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -18,7 +20,9 @@ class MPApp : public QApplication {
 	// bitmask for which players are human-controlled
 	uint32_t mask;
 	// flag for whether or not multiplayer is enabled
-	char flag;
+	char mpFlag;
+	// flag for whether or not play by e-mail is enabled
+	char pbemFlag;
 	Bic bic;
 	uint32_t nRaces;
 	RaceRule *raceRules;
@@ -27,6 +31,10 @@ class MPApp : public QApplication {
 	// UI elements
 	QWidget widget;
 	QVBoxLayout vboxLayout;
+	QHBoxLayout topButtonLayout;
+	QRadioButton hotseatButton;
+	QRadioButton pbemButton;
+	QButtonGroup buttonGroup;
 	QGroupBox groupBox;
 	QGridLayout gridLayout;
 	QCheckBox boxes[32]; // one per leader, not all will be used
