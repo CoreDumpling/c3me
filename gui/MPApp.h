@@ -26,6 +26,7 @@ class MPApp : public QApplication {
 	QGridLayout layout;
 	QCheckBox boxes[32]; // one per leader, not all will be used
 	QPushButton refreshButton;
+	QPushButton saveChangesButton;
 
     public:
 	MPApp(int argc, char *argv[]);
@@ -33,7 +34,7 @@ class MPApp : public QApplication {
 
     public slots:
 	void refresh();
-	void update();
+	void saveChanges();
 };
 
 #endif

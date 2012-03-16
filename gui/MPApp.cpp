@@ -8,6 +8,8 @@ MPApp::MPApp(int argc, char *argv[]) : QApplication (argc, argv) {
 
     refreshButton.setText("Refresh");
     connect(&refreshButton, SIGNAL(clicked()), this, SLOT(refresh()));
+    saveChangesButton.setText("Save Changes");
+    connect(&saveChangesButton, SIGNAL(clicked()), this, SLOT(saveChanges()));
 }
 
 MPApp::~MPApp() {
@@ -68,15 +70,15 @@ void MPApp::refresh() {
 	boxes[i].setText(raceRules[leaders[i].nationality].civName);
 	boxes[i].setChecked(1 << i & mask);
 	boxes[i].show();
-	connect(&boxes[i], SIGNAL(released()), this, SLOT(update()));
 	layout.addWidget(&boxes[i], i % 8, i / 8);
     }
     layout.addWidget(&refreshButton, 8, 0);
+    layout.addWidget(&saveChangesButton, 8, 1);
     widget.setLayout(&layout);
     widget.show();
 }
 
-void MPApp::update() {
+void MPApp::saveChanges() {
     mask = 0;
     flag = 1;
     for (int i = 0; i < 32; ++i) {
