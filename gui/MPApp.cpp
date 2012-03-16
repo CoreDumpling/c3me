@@ -27,6 +27,7 @@ MPApp::MPApp(int argc, char *argv[]) : QApplication (argc, argv) {
     bottomButtonLayout.addWidget(&saveChangesButton);
     vboxLayout.addLayout(&bottomButtonLayout);
     widget.setLayout(&vboxLayout);
+    widget.setWindowTitle("C3C Multiplayer Tool v1.0");
     widget.show();
 }
 
