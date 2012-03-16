@@ -5,7 +5,10 @@
 #include <QApplication>
 #include <QCheckBox>
 #include <QGridLayout>
+#include <QGroupBox>
+#include <QHBoxLayout>
 #include <QPushButton>
+#include <QVBoxLayout>
 #include <QWidget>
 
 class MPApp : public QApplication {
@@ -23,8 +26,11 @@ class MPApp : public QApplication {
 
 	// UI elements
 	QWidget widget;
-	QGridLayout layout;
+	QVBoxLayout vboxLayout;
+	QGroupBox groupBox;
+	QGridLayout gridLayout;
 	QCheckBox boxes[32]; // one per leader, not all will be used
+	QHBoxLayout bottomButtonLayout;
 	QPushButton refreshButton;
 	QPushButton saveChangesButton;
 
