@@ -184,8 +184,8 @@ int dump_city(int cityId)
         PRINT_FIELD(city, citizenPtr, "%p");
         PRINT_FIELD_BUF(city, no_idea_6, "%p");
         PRINT_FIELD(city, population, "%d");
-        PRINT_FIELD_BUF(city, no_idea_7, "%p");
-        PRINT_FIELD(city, culture, "%d");
+        PRINT_FIELD(city, culturePerTurn, "%d");
+        PRINT_FIELD_BUF(city, culture, "%d");
         PRINT_FIELD_BUF(city, no_idea_8, "%p");
         PRINT_FIELD(city, name, "%s");
     }

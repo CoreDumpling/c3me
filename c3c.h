@@ -576,9 +576,9 @@ typedef struct {
     uint32_t citizenPtr;
     uint32_t no_idea_6[21];
     uint32_t population;
-    uint32_t no_idea_7[2];
-    uint32_t culture;
-    uint32_t no_idea_8[38];
+    uint32_t culturePerTurn;
+    uint32_t culture[32]; /* one culture value for each civ */
+    uint32_t no_idea_8[8];
     char name[24];
 } City;
 
