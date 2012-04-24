@@ -141,7 +141,6 @@ int dump_bic()
 
 int dump_lead(int leadId)
 {
-    uint32_t leadPtr;
     Leader lead;
     if (!ReadC3CMemory(LEADERS_BEGIN_ADDR + leadId * sizeof(Leader),
                        &lead, sizeof(Leader))) {
