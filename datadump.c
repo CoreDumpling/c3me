@@ -30,7 +30,7 @@ int dump_bic()
     Bic bic;
 
     if (!ReadC3CMemory(BIC_ADDR, &bic, sizeof(Bic))) {
-	return 1;
+        return 1;
     }
 
     PRINT_STR(bic, BIC);
@@ -144,8 +144,8 @@ int dump_lead(int leadId)
     uint32_t leadPtr;
     Leader lead;
     if (!ReadC3CMemory(LEADERS_BEGIN_ADDR + leadId * sizeof(Leader),
-		       &lead, sizeof(Leader))) {
-	return 1;
+                       &lead, sizeof(Leader))) {
+        return 1;
     }
     PRINT_STR(lead, LEAD);
     PRINT_FIELD_BUF(lead, no_idea_1, "%p");
@@ -190,51 +190,51 @@ int dump_unit(int unitId)
     uint32_t unitValid, unitValidPtr;
     uint32_t unitPtr, unitPtrPtr;
     if (!ReadC3CMemory(UNITS_BEGIN_ADDR, &unitsPtr, sizeof(uint32_t))) {
-	return 1;
+        return 1;
     }
     unitValidPtr = unitsPtr + unitId * 2 * sizeof(uint32_t);
     if (!ReadC3CMemory(unitValidPtr, &unitValid, sizeof(uint32_t))) {
-	return 1;
+        return 1;
     }
     unitPtrPtr = unitValidPtr + sizeof(uint32_t);
     if (unitValid != 0xffffffff) {
-	fprintf(stderr, "Invalid unit id: %d\n", unitId);
-	return 1;
+        fprintf(stderr, "Invalid unit id: %d\n", unitId);
+        return 1;
     } else {
-	Unit unit;
-	if (!ReadC3CMemory(unitPtrPtr, &unitPtr, sizeof(uint32_t))) {
-	    return 1;
-	}
-	if (!unitPtr) {
-	    fprintf(stderr, "Error: NULL pointer\n");
-	    return 1;
-	}
-	if (!ReadC3CMemory(unitPtr, &unit, sizeof(Unit))) {
-	    return 1;
-	}
-	PRINT_FIELD(unit, no_idea_1, "%p");
-	PRINT_FIELD(unit, id, "%d");
-	PRINT_FIELD(unit, x, "%d");
-	PRINT_FIELD(unit, y, "%d");
-	PRINT_FIELD(unit, prevx, "%d");
-	PRINT_FIELD(unit, prevy, "%d");
-	PRINT_FIELD(unit, owner, "%d");
-	PRINT_FIELD(unit, nationality, "%d");
-	PRINT_FIELD(unit, no_idea_3, "%d");
-	PRINT_FIELD(unit, type, "%d");
-	PRINT_FIELD(unit, experience, "%d");
-	PRINT_FIELD(unit, no_idea_4, "%d");
-	PRINT_FIELD(unit, damage, "%d");
-	PRINT_FIELD(unit, usedMovement, "%d");
-	PRINT_FIELD(unit, no_idea_5, "%d");
-	PRINT_FIELD(unit, workerAction, "%d");
-	PRINT_FIELD_BUF(unit, no_idea_6, "%d");
-	PRINT_FIELD(unit, fortified, "%d");
-	PRINT_FIELD(unit, endTurn, "%d");
-	PRINT_FIELD_BUF(unit, no_idea_7, "%d");
-	PRINT_STR(unit, name);
-	PRINT_FIELD_BUF(unit, no_idea_8, "%d");
-	PRINT_FIELD_BUF(unit, no_idea_9, "%d");
+        Unit unit;
+        if (!ReadC3CMemory(unitPtrPtr, &unitPtr, sizeof(uint32_t))) {
+            return 1;
+        }
+        if (!unitPtr) {
+            fprintf(stderr, "Error: NULL pointer\n");
+            return 1;
+        }
+        if (!ReadC3CMemory(unitPtr, &unit, sizeof(Unit))) {
+            return 1;
+        }
+        PRINT_FIELD(unit, no_idea_1, "%p");
+        PRINT_FIELD(unit, id, "%d");
+        PRINT_FIELD(unit, x, "%d");
+        PRINT_FIELD(unit, y, "%d");
+        PRINT_FIELD(unit, prevx, "%d");
+        PRINT_FIELD(unit, prevy, "%d");
+        PRINT_FIELD(unit, owner, "%d");
+        PRINT_FIELD(unit, nationality, "%d");
+        PRINT_FIELD(unit, no_idea_3, "%d");
+        PRINT_FIELD(unit, type, "%d");
+        PRINT_FIELD(unit, experience, "%d");
+        PRINT_FIELD(unit, no_idea_4, "%d");
+        PRINT_FIELD(unit, damage, "%d");
+        PRINT_FIELD(unit, usedMovement, "%d");
+        PRINT_FIELD(unit, no_idea_5, "%d");
+        PRINT_FIELD(unit, workerAction, "%d");
+        PRINT_FIELD_BUF(unit, no_idea_6, "%d");
+        PRINT_FIELD(unit, fortified, "%d");
+        PRINT_FIELD(unit, endTurn, "%d");
+        PRINT_FIELD_BUF(unit, no_idea_7, "%d");
+        PRINT_STR(unit, name);
+        PRINT_FIELD_BUF(unit, no_idea_8, "%d");
+        PRINT_FIELD_BUF(unit, no_idea_9, "%d");
     }
     return 0;
 }
@@ -251,33 +251,33 @@ void print_usage()
 int main(int argc, char **argv)
 {
     if (argc < 2) {
-	print_usage();
-	return 1;
+        print_usage();
+        return 1;
     }
 
     if (!FindC3C()) {
-	return 1;
+        return 1;
     }
 
     if (!strcmp("bic", argv[1])) {
-	return dump_bic();
+        return dump_bic();
     } else if (!strcmp("leader", argv[1])) {
-	if (argc < 3) {
-	    fprintf(stderr, "Leader id required\n");
-	    print_usage();
-	    return 1;
-	}
-	return dump_lead(atoi(argv[2]));
+        if (argc < 3) {
+            fprintf(stderr, "Leader id required\n");
+            print_usage();
+            return 1;
+        }
+        return dump_lead(atoi(argv[2]));
     } else if (!strcmp("unit", argv[1])) {
-	if (argc < 3) {
-	    fprintf(stderr, "Unit id required\n");
-	    print_usage();
-	    return 1;
-	}
-	return dump_unit(atoi(argv[2]));
+        if (argc < 3) {
+            fprintf(stderr, "Unit id required\n");
+            print_usage();
+            return 1;
+        }
+        return dump_unit(atoi(argv[2]));
     } else {
-	fprintf(stderr, "Unrecognized option: %s\n", argv[1]);
-	print_usage();
-	return 1;
+        fprintf(stderr, "Unrecognized option: %s\n", argv[1]);
+        print_usage();
+        return 1;
     }
 }
