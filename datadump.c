@@ -175,9 +175,10 @@ int dump_city(int cityId)
         PRINT_FIELD_BUF(city, no_idea_2, "%p");
         PRINT_FIELD(city, currentFood, "%d");
         PRINT_FIELD(city, currentShields, "%d");
-        PRINT_FIELD(city, no_idea_3, "%p");
+        PRINT_FIELD(city, pollution, "%p");
         PRINT_FIELD(city, currentBuild, "%d");
         PRINT_FIELD(city, currentBuildType, "%d");
+        PRINT_FIELD(city, numImprovements, "%d");
         PRINT_FIELD_BUF(city, no_idea_4, "%p");
         PRINT_FIELD(city, BINF, "%p");
         PRINT_FIELD_BUF(city, no_idea_5, "%p");

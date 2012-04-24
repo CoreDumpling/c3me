@@ -564,10 +564,11 @@ typedef struct {
     uint16_t x;
     uint16_t y;
     uint32_t owner; /* value seems to be only least significant byte? */
-    uint32_t no_idea_2[5];
+    uint32_t numImprovements; /* seems to exclude wonders */
+    uint32_t no_idea_2[4];
     uint32_t currentFood;
     uint32_t currentShields;
-    uint32_t no_idea_3;
+    uint32_t pollution; /* building pollution only */
     uint32_t currentBuild;
     uint32_t currentBuildType;	/* 1 = building, 2 = unit */
     uint32_t no_idea_4[23];
