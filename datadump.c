@@ -139,6 +139,59 @@ int dump_bic()
     return 0;
 }
 
+int dump_city(int cityId)
+{
+    uint32_t citiesPtr;
+    uint32_t cityValid, cityValidPtr;
+    uint32_t cityPtr, cityPtrPtr;
+    if (!ReadC3CMemory(CITIES_BEGIN_ADDR, &citiesPtr, sizeof(uint32_t))) {
+        return 1;
+    }
+    cityValidPtr = citiesPtr + 2 * cityId * sizeof(uint32_t);
+    if (!ReadC3CMemory(cityValidPtr, &cityValid, sizeof(uint32_t))) {
+        return 1;
+    }
+    cityPtrPtr = cityValidPtr + sizeof(uint32_t);
+    if (cityValid != 0xffffffff) {
+        fprintf(stderr, "Invalid city id: %d\n", cityId);
+        return 1;
+    } else {
+        City city;
+        if (!ReadC3CMemory(cityPtrPtr, &cityPtr, sizeof(uint32_t))) {
+            return 1;
+        }
+        if (!cityPtr) {
+            fprintf(stderr, "Error: NULL pointer\n");
+            return 1;
+        }
+        if (!ReadC3CMemory(cityPtr, &city, sizeof(City))) {
+            return 1;
+        }
+        PRINT_FIELD(city, no_idea_1, "%p");
+        PRINT_FIELD(city, id, "%d");
+        PRINT_FIELD(city, x, "%d");
+        PRINT_FIELD(city, y, "%d");
+        PRINT_FIELD(city, owner, "%d");
+        PRINT_FIELD_BUF(city, no_idea_2, "%p");
+        PRINT_FIELD(city, currentFood, "%d");
+        PRINT_FIELD(city, currentShields, "%d");
+        PRINT_FIELD(city, no_idea_3, "%p");
+        PRINT_FIELD(city, currentBuild, "%d");
+        PRINT_FIELD(city, currentBuildType, "%d");
+        PRINT_FIELD_BUF(city, no_idea_4, "%p");
+        PRINT_FIELD(city, BINF, "%p");
+        PRINT_FIELD_BUF(city, no_idea_5, "%p");
+        PRINT_FIELD(city, citizenPtr, "%p");
+        PRINT_FIELD_BUF(city, no_idea_6, "%p");
+        PRINT_FIELD(city, population, "%d");
+        PRINT_FIELD_BUF(city, no_idea_7, "%p");
+        PRINT_FIELD(city, culture, "%d");
+        PRINT_FIELD_BUF(city, no_idea_8, "%p");
+        PRINT_FIELD(city, name, "%s");
+    }
+    return 0;
+}
+
 int dump_lead(int leadId)
 {
     Leader lead;
@@ -243,6 +296,7 @@ void print_usage()
     fprintf(stderr, "Usage: datadump <data-type> [<id>]\n");
     fprintf(stderr, "data-type may be:\n");
     fprintf(stderr, "\tbic\n");
+    fprintf(stderr, "\tcity\n");
     fprintf(stderr, "\tleader\n");
     fprintf(stderr, "\tunit\n");
 }
@@ -260,6 +314,13 @@ int main(int argc, char **argv)
 
     if (!strcmp("bic", argv[1])) {
         return dump_bic();
+    } else if (!strcmp("city", argv[1])) {
+        if (argc < 3) {
+            fprintf(stderr, "City id required\n");
+            print_usage();
+            return 1;
+        }
+        return dump_city(atoi(argv[2]));
     } else if (!strcmp("leader", argv[1])) {
         if (argc < 3) {
             fprintf(stderr, "Leader id required\n");

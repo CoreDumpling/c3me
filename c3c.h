@@ -563,7 +563,7 @@ typedef struct {
     uint32_t id;
     uint16_t x;
     uint16_t y;
-    uint32_t owner;
+    uint32_t owner; /* value seems to be only least significant byte? */
     uint32_t no_idea_2[5];
     uint32_t currentFood;
     uint32_t currentShields;
