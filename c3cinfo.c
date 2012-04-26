@@ -322,7 +322,7 @@ int main(int argc, char **argv)
             if (citizenValid == 0xffffffff && citizenPtr != 0) {
                 Citizen citizen;
                 ReadC3CMemory(citizenPtr, &citizen, sizeof(Citizen));
-                printf("\tCitizen type: %d\n", citizen.type);
+                printf("\tCitizen type: %s\n", citizenRules[citizen.type].name);
                 citizenCount++;
             }
         }
