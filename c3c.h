@@ -525,7 +525,7 @@ typedef struct {
     uint32_t government;
     uint32_t numStartTechs;
     uint32_t no_idea_3;
-    uint32_t civId;
+    int32_t civId; /* maps to RaceRule, but -3 is "Any" and -2 is "Random" */
     uint32_t color;
     uint32_t no_idea_4[4];
 } PlayerData;

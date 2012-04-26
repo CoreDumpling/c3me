@@ -226,9 +226,20 @@ int main(int argc, char **argv)
     }
     for (i = 0; i < nPlayers; ++i) {
         /* the index i starts at zero, but counts from "Player 1" */
-        printf("Player #%02d - %s (%s):\n", i + 1,
-               raceRules[playerData[i].civId].civName,
-               govtRules[playerData[i].government].name);
+        if (playerData[i].civId >= 0) {
+            printf("Player #%02d - %s (%s):\n", i + 1,
+                   raceRules[playerData[i].civId].civName,
+                   govtRules[playerData[i].government].name);
+        } else if (playerData[i].civId == -2) {
+            printf("Player #%02d - Random (%s):\n", i + 1,
+                   govtRules[playerData[i].government].name);
+        } else if (playerData[i].civId == -3) {
+            printf("Player #%02d - Any (%s):\n", i + 1,
+                   govtRules[playerData[i].government].name);
+        } else {
+            printf("Player #%02d - Unknown (%s):\n", i + 1,
+                   govtRules[playerData[i].government].name);
+        }
     }
 
     /* There is always a block of memory that holds 32 leaders, even though not
