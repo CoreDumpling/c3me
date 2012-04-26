@@ -189,6 +189,8 @@ int dump_city(int cityId)
         PRINT_FIELD_BUF(city, culture, "%d");
         PRINT_FIELD_BUF(city, no_idea_8, "%p");
         PRINT_FIELD(city, name, "%s");
+        PRINT_FIELD_BUF(city, no_idea_9, "%p");
+        PRINT_FIELD_BUF(city, buildings, "%p");
     }
     return 0;
 }

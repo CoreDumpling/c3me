@@ -301,6 +301,14 @@ int main(int argc, char **argv)
                city.id, city.name, city.x, city.y, city.population);
         citiesPtr += sizeof(uint32_t);
 
+        /* list building data */
+        int b;
+        for (b = 0; b < bic.nBuildings; ++b) {
+            if (city.buildings[b / 32] & (1 << (b % 32))) {
+                printf("\tBuilding: %s\n", bldgRules[b].name);
+            }
+        }
+
         /* read citizen data */
         uint32_t citizensPtr = city.citizenPtr;
         uint32_t citizenValid;

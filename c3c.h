@@ -581,6 +581,8 @@ typedef struct {
     uint32_t culture[32]; /* one culture value for each civ */
     uint32_t no_idea_8[8];
     char name[24];
+    uint32_t no_idea_9[38];
+    uint32_t buildings[8]; /* bitmask, supports up to 256 buildings */
 } City;
 
 /* In-game citizen information */
