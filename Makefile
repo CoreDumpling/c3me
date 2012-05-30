@@ -7,7 +7,7 @@ PATH := $(MINGW_DIR)/bin:$(PATH)
 CFLAGS =
 CC = gcc $(CFLAGS)
 
-all: c3cinfo.exe datadump.exe mp.exe
+all: c3cinfo.exe datadump.exe mp.exe adminpw.exe
 	echo $(CYGDRIVE)
 	cd gui && $(MAKE)
 
@@ -21,6 +21,9 @@ datadump.exe: datadump.c c3c.o
 	$(CC) $^ -o $@
 
 mp.exe: mp.c c3c.o
+	$(CC) $^ -o $@
+
+adminpw.exe: adminpw.c c3c.o
 	$(CC) $^ -o $@
 
 clean:
